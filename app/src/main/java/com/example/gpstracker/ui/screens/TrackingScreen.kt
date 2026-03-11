@@ -24,7 +24,7 @@ import java.io.FileOutputStream
 @Composable
 fun TrackingScreen(viewModel: TrackingViewModel = viewModel()) {
     val context = LocalContext.current
-    val isTracking = viewModel.isTracking
+    val isTracking by viewModel.isTracking.collectAsState()
     val frequencyMs by viewModel.trackingFrequencyMs.collectAsState()
     val scope = rememberCoroutineScope()
 
@@ -60,7 +60,6 @@ fun TrackingScreen(viewModel: TrackingViewModel = viewModel()) {
                     } else {
                         context.startService(intent)
                     }
-                    viewModel.setTrackingState(!isTracking)
                 },
                 modifier = Modifier.size(width = 200.dp, height = 50.dp)
             ) {

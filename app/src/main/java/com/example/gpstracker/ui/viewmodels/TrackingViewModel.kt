@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.gpstracker.data.database.LocationDao
 import com.example.gpstracker.data.preferences.SettingsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
+import com.example.gpstracker.service.LocationTrackingService
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
@@ -17,19 +18,14 @@ class TrackingViewModel @Inject constructor(
     private val locationDao: LocationDao
 ) : ViewModel() {
 
-    // Simple boolean state for tracking; in reality, better to observe FGS status or Room directly
-    var isTracking = false
-        private set
+    // Observe tracking state directly from the Foreground Service
+    val isTracking: StateFlow<Boolean> = LocationTrackingService.isTracking
 
     val trackingFrequencyMs: StateFlow<Long> = settingsRepository.trackingFrequencyFlow.stateIn(
         scope = viewModelScope,
         started = SharingStarted.WhileSubscribed(5000),
         initialValue = SettingsRepository.DEFAULT_FREQUENCY_MS
     )
-
-    fun setTrackingState(tracking: Boolean) {
-        isTracking = tracking
-    }
 
     fun updateFrequency(newFreqMs: Long) {
         viewModelScope.launch {

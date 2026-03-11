@@ -29,6 +29,10 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -45,8 +49,18 @@ class LocationTrackingService : Service() {
     private lateinit var wakeLock: PowerManager.WakeLock
 
     private var currentSessionId: Long = 0L
-    private val serviceScope = CoroutineScope(Dispatchers.IO + Job())
+    private var serviceScope = CoroutineScope(Dispatchers.IO + Job())
     private var locationCallback: LocationCallback? = null
+
+    companion object {
+        const val ACTION_START = "ACTION_START_TRACKING"
+        const val ACTION_STOP = "ACTION_STOP_TRACKING"
+        private const val CHANNEL_ID = "LocationServiceChannel"
+        private const val NOTIFICATION_ID = 1
+
+        private val _isTracking = MutableStateFlow(false)
+        val isTracking: StateFlow<Boolean> = _isTracking.asStateFlow()
+    }
 
     override fun onCreate() {
         super.onCreate()
@@ -67,7 +81,8 @@ class LocationTrackingService : Service() {
 
         if (intent?.action == ACTION_START) {
             if (!wakeLock.isHeld) {
-                wakeLock.acquire(10 * 60 * 1000L /*10 minutes, refreshed internally by android often*/) // Acquire for a reasonable maximum or leave indefinite for long flights
+                // Acquire indefinitely for long tracking sessions
+                wakeLock.acquire()
             }
             startForegroundService()
             startTracking()
@@ -108,6 +123,11 @@ class LocationTrackingService : Service() {
     }
 
     private fun startTracking() {
+        if (_isTracking.value) return
+
+        _isTracking.value = true
+        serviceScope = CoroutineScope(Dispatchers.IO + Job())
+
         serviceScope.launch {
             // Determine a new session ID based on current max
             val latestSession = locationDao.getLatestSessionId() ?: 0L
@@ -168,6 +188,10 @@ class LocationTrackingService : Service() {
         if (wakeLock.isHeld) {
             wakeLock.release()
         }
+
+        _isTracking.value = false
+        serviceScope.cancel()
+
         stopForeground(STOP_FOREGROUND_REMOVE)
         stopSelf()
     }
@@ -191,12 +215,5 @@ class LocationTrackingService : Service() {
             val manager = getSystemService(NotificationManager::class.java)
             manager.createNotificationChannel(serviceChannel)
         }
-    }
-
-    companion object {
-        const val ACTION_START = "ACTION_START_TRACKING"
-        const val ACTION_STOP = "ACTION_STOP_TRACKING"
-        private const val CHANNEL_ID = "LocationServiceChannel"
-        private const val NOTIFICATION_ID = 1
     }
 }
