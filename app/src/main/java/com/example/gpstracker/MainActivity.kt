@@ -17,7 +17,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.core.content.ContextCompat
 import com.example.gpstracker.ui.screens.PermissionScreen
-import com.example.gpstracker.ui.screens.TrackingScreen
+import com.example.gpstracker.ui.screens.MainScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -34,7 +34,7 @@ class MainActivity : ComponentActivity() {
                     var permissionsGranted by remember { mutableStateOf(checkPermissions()) }
 
                     if (permissionsGranted) {
-                        TrackingScreen()
+                        MainScreen()
                     } else {
                         PermissionScreen(
                             onPermissionsGranted = {

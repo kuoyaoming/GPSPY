@@ -32,4 +32,10 @@ object AppModule {
     fun provideSettingsRepository(@ApplicationContext context: Context): SettingsRepository {
         return SettingsRepository(context)
     }
+
+    @Provides
+    @Singleton
+    fun provideGnssStatusManager(@ApplicationContext context: Context): com.example.gpstracker.service.GnssStatusManager {
+        return com.example.gpstracker.service.GnssStatusManager(context)
+    }
 }

@@ -2,13 +2,20 @@ package com.example.gpstracker.ui.screens
 
 import android.content.Context
 import android.content.Intent
+import android.content.BroadcastReceiver
+import android.content.IntentFilter
+import android.location.LocationManager
 import android.net.Uri
+import android.provider.Settings
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.foundation.background
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -22,14 +29,62 @@ import java.io.File
 import java.io.FileOutputStream
 
 @Composable
-fun TrackingScreen(viewModel: TrackingViewModel = viewModel()) {
+fun TrackingScreen(viewModel: TrackingViewModel = viewModel(), modifier: Modifier = Modifier) {
     val context = LocalContext.current
     val isTracking by viewModel.isTracking.collectAsState()
     val frequencyMs by viewModel.trackingFrequencyMs.collectAsState()
+    val currentLocation by viewModel.currentLocation.collectAsState()
+    val satellites by viewModel.satellites.collectAsState()
     val scope = rememberCoroutineScope()
 
+    var showGpsDisabledDialog by remember { mutableStateOf(false) }
+
+    DisposableEffect(context) {
+        val locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+
+        val checkGps = {
+            showGpsDisabledDialog = !locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+        }
+
+        checkGps()
+
+        val receiver = object : BroadcastReceiver() {
+            override fun onReceive(ctx: Context?, intent: Intent?) {
+                if (intent?.action == LocationManager.PROVIDERS_CHANGED_ACTION) {
+                    checkGps()
+                }
+            }
+        }
+        context.registerReceiver(receiver, IntentFilter(LocationManager.PROVIDERS_CHANGED_ACTION))
+
+        onDispose {
+            context.unregisterReceiver(receiver)
+        }
+    }
+
+    if (showGpsDisabledDialog) {
+        AlertDialog(
+            onDismissRequest = { /* Force user to enable or dismiss, maybe just dismissible */ },
+            title = { Text("GPS is Disabled") },
+            text = { Text("Your GPS seems to be disabled. Please enable it in the system settings to allow tracking.") },
+            confirmButton = {
+                TextButton(onClick = {
+                    val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
+                    context.startActivity(intent)
+                }) {
+                    Text("Enable GPS")
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showGpsDisabledDialog = false }) {
+                    Text("Dismiss")
+                }
+            }
+        )
+    }
+
     Column(
-        modifier = Modifier
+        modifier = modifier
             .fillMaxSize()
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -64,6 +119,38 @@ fun TrackingScreen(viewModel: TrackingViewModel = viewModel()) {
                 modifier = Modifier.size(width = 200.dp, height = 50.dp)
             ) {
                 Text(text = if (isTracking) "Stop Tracking" else "Start Tracking")
+            }
+        }
+
+        if (isTracking && currentLocation != null) {
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(text = "Current GPS Data:", style = MaterialTheme.typography.titleMedium)
+                Text(text = "Lat: ${currentLocation?.latitude}, Lon: ${currentLocation?.longitude}", style = MaterialTheme.typography.bodyMedium)
+                Text(text = "Alt: ${currentLocation?.altitude}m, Speed: ${currentLocation?.speed}m/s", style = MaterialTheme.typography.bodyMedium)
+
+                Spacer(modifier = Modifier.height(8.dp))
+
+                Text(text = "GNSS Info:", style = MaterialTheme.typography.titleMedium)
+                val constellationMap = mapOf(
+                    1 to "GPS", 2 to "SBAS", 3 to "GLONASS", 4 to "QZSS", 5 to "BEIDOU", 6 to "GALILEO", 7 to "IRNSS"
+                )
+                val usedConstellations = satellites.filter { it.usedInFix }.map { it.constellationType }.toSet()
+                val availableConstellations = satellites.map { it.constellationType }.toSet()
+
+                Row(horizontalArrangement = Arrangement.Center, modifier = Modifier.fillMaxWidth()) {
+                    availableConstellations.forEach { type ->
+                        val name = constellationMap[type] ?: "Unknown ($type)"
+                        val color = if (usedConstellations.contains(type)) Color.Green else Color.Red
+                        Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(horizontal = 4.dp)) {
+                            Box(modifier = Modifier.size(10.dp).background(color, CircleShape))
+                            Spacer(modifier = Modifier.width(4.dp))
+                            Text(text = name, style = MaterialTheme.typography.bodySmall)
+                        }
+                    }
+                }
             }
         }
 
