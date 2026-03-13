@@ -45,6 +45,9 @@ class LocationTrackingService : Service() {
     @Inject
     lateinit var settingsRepository: SettingsRepository
 
+    @Inject
+    lateinit var gnssStatusManager: GnssStatusManager
+
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var wakeLock: PowerManager.WakeLock
 
@@ -60,6 +63,9 @@ class LocationTrackingService : Service() {
 
         private val _isTracking = MutableStateFlow(false)
         val isTracking: StateFlow<Boolean> = _isTracking.asStateFlow()
+
+        private val _currentLocation = MutableStateFlow<android.location.Location?>(null)
+        val currentLocation: StateFlow<android.location.Location?> = _currentLocation.asStateFlow()
     }
 
     override fun onCreate() {
@@ -126,6 +132,7 @@ class LocationTrackingService : Service() {
         if (_isTracking.value) return
 
         _isTracking.value = true
+        gnssStatusManager.startListening()
         serviceScope = CoroutineScope(Dispatchers.IO + Job())
 
         serviceScope.launch {
@@ -154,6 +161,7 @@ class LocationTrackingService : Service() {
                 override fun onLocationResult(locationResult: LocationResult) {
                     for (location in locationResult.locations) {
                         Log.d("LocationService", "Loc: lat=${location.latitude}, lon=${location.longitude}, alt=${location.altitude}")
+                        _currentLocation.value = location
                         serviceScope.launch {
                             val point = LocationPoint(
                                 sessionId = currentSessionId,
@@ -190,6 +198,7 @@ class LocationTrackingService : Service() {
         }
 
         _isTracking.value = false
+        gnssStatusManager.stopListening()
         serviceScope.cancel()
 
         stopForeground(STOP_FOREGROUND_REMOVE)

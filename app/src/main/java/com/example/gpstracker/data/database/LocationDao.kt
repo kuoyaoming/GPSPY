@@ -21,4 +21,16 @@ interface LocationDao {
 
     @Query("DELETE FROM location_points")
     suspend fun clearAll()
+
+    @Query("SELECT sessionId, MIN(timestamp) as startTime, (MAX(timestamp) - MIN(timestamp)) as durationMs FROM location_points GROUP BY sessionId ORDER BY sessionId DESC")
+    fun getAllSessions(): Flow<List<SessionSummary>>
+
+    @Query("DELETE FROM location_points WHERE sessionId = :sessionId")
+    suspend fun deleteSession(sessionId: Long)
 }
+
+data class SessionSummary(
+    val sessionId: Long,
+    val startTime: Long,
+    val durationMs: Long
+)

@@ -15,11 +15,16 @@ import javax.inject.Inject
 @HiltViewModel
 class TrackingViewModel @Inject constructor(
     private val settingsRepository: SettingsRepository,
-    private val locationDao: LocationDao
+    private val locationDao: LocationDao,
+    private val gnssStatusManager: com.example.gpstracker.service.GnssStatusManager
 ) : ViewModel() {
 
     // Observe tracking state directly from the Foreground Service
     val isTracking: StateFlow<Boolean> = LocationTrackingService.isTracking
+
+    val currentLocation: StateFlow<android.location.Location?> = LocationTrackingService.currentLocation
+
+    val satellites: StateFlow<List<com.example.gpstracker.service.GnssSatelliteInfo>> = gnssStatusManager.satellites
 
     val trackingFrequencyMs: StateFlow<Long> = settingsRepository.trackingFrequencyFlow.stateIn(
         scope = viewModelScope,
