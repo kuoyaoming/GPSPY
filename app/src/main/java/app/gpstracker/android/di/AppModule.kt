@@ -1,9 +1,9 @@
-package app.gpstracker.android.di
+package com.gpsspy.gpstracker.di
 
 import android.content.Context
-import app.gpstracker.android.data.database.AppDatabase
-import app.gpstracker.android.data.database.LocationDao
-import app.gpstracker.android.data.preferences.SettingsRepository
+import com.gpsspy.gpstracker.data.database.AppDatabase
+import com.gpsspy.gpstracker.data.database.LocationDao
+import com.gpsspy.gpstracker.data.preferences.SettingsRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -35,7 +35,10 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideGnssStatusManager(@ApplicationContext context: Context): app.gpstracker.android.service.GnssStatusManager {
-        return app.gpstracker.android.service.GnssStatusManager(context)
+    fun provideGnssStatusManager(@ApplicationContext context: Context): com.gpsspy.gpstracker.service.GnssStatusManager {
+        return com.gpsspy.gpstracker.service.GnssStatusManager(context)
     }
 }
+
+
+

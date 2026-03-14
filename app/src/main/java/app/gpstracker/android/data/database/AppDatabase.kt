@@ -1,4 +1,4 @@
-package app.gpstracker.android.data.database
+package com.gpsspy.gpstracker.data.database
 
 import android.content.Context
 import androidx.room.Database
@@ -29,3 +29,4 @@ abstract class AppDatabase : RoomDatabase() {
         }
     }
 }
+

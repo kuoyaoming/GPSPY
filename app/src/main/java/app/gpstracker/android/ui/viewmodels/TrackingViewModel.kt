@@ -1,11 +1,11 @@
-package app.gpstracker.android.ui.viewmodels
+package com.gpsspy.gpstracker.ui.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import app.gpstracker.android.data.database.LocationDao
-import app.gpstracker.android.data.preferences.SettingsRepository
+import com.gpsspy.gpstracker.data.database.LocationDao
+import com.gpsspy.gpstracker.data.preferences.SettingsRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import app.gpstracker.android.service.LocationTrackingService
+import com.gpsspy.gpstracker.service.LocationTrackingService
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
@@ -16,7 +16,7 @@ import javax.inject.Inject
 class TrackingViewModel @Inject constructor(
     private val settingsRepository: SettingsRepository,
     private val locationDao: LocationDao,
-    private val gnssStatusManager: app.gpstracker.android.service.GnssStatusManager
+    private val gnssStatusManager: com.gpsspy.gpstracker.service.GnssStatusManager
 ) : ViewModel() {
 
     // Observe tracking state directly from the Foreground Service
@@ -24,7 +24,7 @@ class TrackingViewModel @Inject constructor(
 
     val currentLocation: StateFlow<android.location.Location?> = LocationTrackingService.currentLocation
 
-    val satellites: StateFlow<List<app.gpstracker.android.service.GnssSatelliteInfo>> = gnssStatusManager.satellites
+    val satellites: StateFlow<List<com.gpsspy.gpstracker.service.GnssSatelliteInfo>> = gnssStatusManager.satellites
 
     val trackingFrequencyMs: StateFlow<Long> = settingsRepository.trackingFrequencyFlow.stateIn(
         scope = viewModelScope,
@@ -44,3 +44,6 @@ class TrackingViewModel @Inject constructor(
 
     suspend fun getPointsForSession(sessionId: Long) = locationDao.getLocationPointsForSessionSync(sessionId)
 }
+
+
+

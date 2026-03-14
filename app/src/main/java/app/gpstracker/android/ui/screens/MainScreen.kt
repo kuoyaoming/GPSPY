@@ -1,4 +1,4 @@
-package app.gpstracker.android.ui.screens
+package com.gpsspy.gpstracker.ui.screens
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon
@@ -45,3 +45,4 @@ fun MainScreen() {
         }
     }
 }
+

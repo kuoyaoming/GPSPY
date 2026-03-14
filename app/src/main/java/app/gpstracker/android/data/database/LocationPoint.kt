@@ -1,4 +1,4 @@
-package app.gpstracker.android.data.database
+package com.gpsspy.gpstracker.data.database
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -14,3 +14,4 @@ data class LocationPoint(
     val bearing: Float,   // degrees
     val timestamp: Long   // ms since epoch
 )
+

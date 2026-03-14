@@ -1,4 +1,4 @@
-package app.gpstracker.android.service
+package com.gpsspy.gpstracker.service
 
 import android.Manifest
 import android.content.Context
@@ -66,3 +66,4 @@ class GnssStatusManager(
         _satellites.value = emptyList()
     }
 }
+

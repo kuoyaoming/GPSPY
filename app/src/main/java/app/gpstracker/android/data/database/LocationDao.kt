@@ -1,4 +1,4 @@
-package app.gpstracker.android.data.database
+package com.gpsspy.gpstracker.data.database
 
 import androidx.room.Dao
 import androidx.room.Insert
@@ -34,3 +34,4 @@ data class SessionSummary(
     val startTime: Long,
     val durationMs: Long
 )
+

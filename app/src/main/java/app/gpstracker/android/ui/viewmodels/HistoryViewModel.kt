@@ -1,9 +1,9 @@
-package app.gpstracker.android.ui.viewmodels
+package com.gpsspy.gpstracker.ui.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import app.gpstracker.android.data.database.LocationDao
-import app.gpstracker.android.data.database.SessionSummary
+import com.gpsspy.gpstracker.data.database.LocationDao
+import com.gpsspy.gpstracker.data.database.SessionSummary
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -30,3 +30,5 @@ class HistoryViewModel @Inject constructor(
 
     suspend fun getPointsForSession(sessionId: Long) = locationDao.getLocationPointsForSessionSync(sessionId)
 }
+
+

@@ -1,4 +1,4 @@
-package app.gpstracker.android.ui.screens
+package com.gpsspy.gpstracker.ui.screens
 
 import android.Manifest
 import android.os.Build
@@ -111,3 +111,4 @@ private fun requestForegroundLocation(launcher: androidx.activity.result.Activit
         )
     )
 }
+

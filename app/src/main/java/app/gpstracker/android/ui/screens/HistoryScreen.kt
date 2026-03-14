@@ -1,4 +1,4 @@
-package app.gpstracker.android.ui.screens
+package com.gpsspy.gpstracker.ui.screens
 
 import android.content.Context
 import android.content.Intent
@@ -15,9 +15,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.content.FileProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
-import app.gpstracker.android.data.database.SessionSummary
-import app.gpstracker.android.ui.viewmodels.HistoryViewModel
-import app.gpstracker.android.utils.GpxGenerator
+import com.gpsspy.gpstracker.data.database.SessionSummary
+import com.gpsspy.gpstracker.ui.viewmodels.HistoryViewModel
+import com.gpsspy.gpstracker.utils.GpxGenerator
 import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
@@ -124,3 +124,5 @@ private fun exportGpxFile(context: Context, gpxContent: String, fileName: String
         Toast.makeText(context, "Export failed: ${e.message}", Toast.LENGTH_LONG).show()
     }
 }
+
+

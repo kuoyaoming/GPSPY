@@ -1,4 +1,4 @@
-package app.gpstracker.android
+package com.gpsspy.gpstracker
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -16,8 +16,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.core.content.ContextCompat
-import app.gpstracker.android.ui.screens.PermissionScreen
-import app.gpstracker.android.ui.screens.MainScreen
+import com.gpsspy.gpstracker.ui.screens.PermissionScreen
+import com.gpsspy.gpstracker.ui.screens.MainScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -66,3 +66,5 @@ class MainActivity : ComponentActivity() {
         return fineLocation && coarseLocation && backgroundLocation && notifications
     }
 }
+
+

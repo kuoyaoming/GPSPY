@@ -1,4 +1,4 @@
-package app.gpstracker.android.data.preferences
+package com.gpsspy.gpstracker.data.preferences
 
 import android.content.Context
 import androidx.datastore.core.DataStore
@@ -28,3 +28,4 @@ class SettingsRepository(private val context: Context) {
         }
     }
 }
+

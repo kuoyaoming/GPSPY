@@ -1,6 +1,6 @@
-package app.gpstracker.android.utils
+package com.gpsspy.gpstracker.utils
 
-import app.gpstracker.android.data.database.LocationPoint
+import com.gpsspy.gpstracker.data.database.LocationPoint
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -70,3 +70,5 @@ object GpxGenerator {
             .replace("'", "&apos;")
     }
 }
+
+
