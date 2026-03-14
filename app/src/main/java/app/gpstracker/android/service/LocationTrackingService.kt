@@ -14,7 +14,7 @@ import android.os.PowerManager
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import app.gpstracker.android.MainActivity
-import app.gpstracker.android.R
+import com.gpsspy.gpstracker.R
 import app.gpstracker.android.data.database.LocationDao
 import app.gpstracker.android.data.database.LocationPoint
 import app.gpstracker.android.data.preferences.SettingsRepository
