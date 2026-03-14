@@ -34,7 +34,12 @@ jobs:
           KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
         run: |
           if [ -n "$KEYSTORE_BASE64" ]; then
-            echo "$KEYSTORE_BASE64" | tr -d '[:space:]' | base64 -d > release.keystore
+            echo "$KEYSTORE_BASE64" | base64 --decode > release.keystore
+            if [ $? -ne 0 ]; then
+                echo "Decoding failed, attempting with tr clean..."
+                echo "$KEYSTORE_BASE64" | tr -d '\n\r' | base64 --decode > release.keystore
+            fi
+            ls -l release.keystore
           fi
 
       - name: Build Release App Bundle (AAB)
