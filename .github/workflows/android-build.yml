@@ -4,6 +4,11 @@ on:
   push:
     tags: [ 'v*' ]
   workflow_dispatch:
+    inputs:
+      tag_name:
+        description: 'Tag name for release (e.g., v1.0.1)'
+        required: true
+        default: 'v1.0.1'
 
 permissions:
   contents: write
@@ -55,9 +60,6 @@ jobs:
             ./gradlew bundleRelease
           fi
 
-      - name: Build Release APK
-        run: ./gradlew assembleRelease
-
       - name: Upload Debug APK Artifact
         uses: actions/upload-artifact@v4
         with:
@@ -67,6 +69,7 @@ jobs:
       - name: Create Release
         uses: softprops/action-gh-release@v2
         with:
+          tag_name: ${{ github.event.inputs.tag_name || github.ref_name }}
           files: |
             app/build/outputs/apk/release/*.apk
             app/build/outputs/bundle/release/*.aab
