@@ -34,15 +34,25 @@ jobs:
           KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
         run: |
           if [ -n "$KEYSTORE_BASE64" ]; then
-            # Clean all whitespace and decode
+            echo "Secret length: ${#KEYSTORE_BASE64}"
+            # Clean and output start to verify format
             echo "$KEYSTORE_BASE64" | tr -d '[:space:]' > keystore_clean.b64
+            echo "First 20 chars of secret: $(head -c 20 keystore_clean.b64)"
+            
+            # Attempt decoding
             base64 -d keystore_clean.b64 > release.keystore
             if [ $? -eq 0 ]; then
               echo "Keystore successfully decoded."
               ls -l release.keystore
             else
-              echo "Error decoding keystore."
-              exit 1
+              echo "Error decoding keystore with base64 -d. Trying alternative..."
+              base64 --decode keystore_clean.b64 > release.keystore
+              if [ $? -eq 0 ]; then
+                echo "Keystore successfully decoded with alternative base64."
+              else
+                echo "Failed to decode."
+                exit 1
+              fi
             fi
           fi
 
