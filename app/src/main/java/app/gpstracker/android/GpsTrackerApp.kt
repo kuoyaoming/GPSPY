@@ -1,4 +1,4 @@
-package com.example.gpstracker
+package app.gpstracker.android
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

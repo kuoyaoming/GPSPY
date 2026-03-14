@@ -1,9 +1,9 @@
-package com.example.gpstracker.ui.viewmodels
+package app.gpstracker.android.ui.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.gpstracker.data.database.LocationDao
-import com.example.gpstracker.data.database.SessionSummary
+import app.gpstracker.android.data.database.LocationDao
+import app.gpstracker.android.data.database.SessionSummary
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow

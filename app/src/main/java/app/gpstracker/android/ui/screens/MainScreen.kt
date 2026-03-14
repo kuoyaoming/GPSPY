@@ -1,4 +1,4 @@
-package com.example.gpstracker.ui.screens
+package app.gpstracker.android.ui.screens
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Icon

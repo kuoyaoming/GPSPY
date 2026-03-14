@@ -1,4 +1,4 @@
-package com.example.gpstracker.service
+package app.gpstracker.android.service
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -13,11 +13,11 @@ import android.os.IBinder
 import android.os.PowerManager
 import android.util.Log
 import androidx.core.app.NotificationCompat
-import com.example.gpstracker.MainActivity
-import com.example.gpstracker.R
-import com.example.gpstracker.data.database.LocationDao
-import com.example.gpstracker.data.database.LocationPoint
-import com.example.gpstracker.data.preferences.SettingsRepository
+import app.gpstracker.android.MainActivity
+import app.gpstracker.android.R
+import app.gpstracker.android.data.database.LocationDao
+import app.gpstracker.android.data.database.LocationPoint
+import app.gpstracker.android.data.preferences.SettingsRepository
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest

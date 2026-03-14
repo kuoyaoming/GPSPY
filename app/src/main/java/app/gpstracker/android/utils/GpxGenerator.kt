@@ -1,6 +1,6 @@
-package com.example.gpstracker.utils
+package app.gpstracker.android.utils
 
-import com.example.gpstracker.data.database.LocationPoint
+import app.gpstracker.android.data.database.LocationPoint
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
