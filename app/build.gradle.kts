@@ -17,8 +17,8 @@ android {
         applicationId = "com.gpsspy.gpstracker"
         minSdk = 26
         targetSdk = 35
-        versionCode = gitCommitCount
-        versionName = "1.0.$gitCommitCount"
+        versionCode = 100 + gitCommitCount
+        versionName = "1.1.$gitCommitCount"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
