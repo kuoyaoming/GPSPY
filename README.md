@@ -2,6 +2,9 @@
   <img src="app/src/main/res/mipmap-xxxhdpi/ic_launcher.webp" alt="GPS Tracker Logo" width="120" />
   <h1>Open GPS Tracker</h1>
   <p>An offline-first, high-accuracy 3D trajectory tracking app for Android.</p>
+  <p>
+    <b>English</b> | <a href="README_zh.md">繁體中文</a>
+  </p>
 </div>
 
 <div align="center">
