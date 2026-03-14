@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GpsTracker</string>
+    <string name="perm_welcome">Добро пожаловать в GPS Трекер</string>
+    <string name="perm_description">Чтобы отслеживать вашу траекторию, нам нужны разрешения на местоположение и уведомления.</string>
+    <string name="perm_grant_button">Предоставить разрешения</string>
+    <string name="perm_bg_title">Требуется фоновое местоположение</string>
+    <string name="perm_bg_description">GPS Tracker собирает данные о местоположении, чтобы записывать траекторию вашего трехмерного движения, даже когда приложение закрыто или не используется. Это необходимо для длительных походов или полетов, когда вы можете выключить экран для экономии батареи.</string>
+    <string name="perm_understand_button">Я понимаю</string>
+    <string name="tab_record">Запись</string>
+    <string name="tab_manager">Менеджер</string>
+    <string name="gps_disabled_title">GPS отключен</string>
+    <string name="gps_disabled_message">Ваш GPS, похоже, отключен. Пожалуйста, включите его в настройках системы, чтобы разрешить отслеживание.</string>
+    <string name="gps_disabled_enable">Включить GPS</string>
+    <string name="gps_disabled_dismiss">Закрыть</string>
+    <string name="track_title">Сеанс GPS-отслеживания</string>
+    <string name="track_status_recording">Статус: ЗАПИСЬ...</string>
+    <string name="track_status_idle">Статус: ОЖИДАНИЕ</string>
+    <string name="track_button_stop">Остановить отслеживание</string>
+    <string name="track_button_start">Начать отслеживание</string>
+    <string name="track_data_title">Текущие данные GPS:</string>
+    <string name="track_gnss_title">Информация GNSS:</string>
+    <string name="track_freq_label">Частота записи: %1$d секунд</string>
+    <string name="track_freq_hint">Динамические обновления - не нужно останавливать</string>
+    <string name="track_export_button">Экспорт последнего сеанса в GPX</string>
+    <string name="toast_no_data">Нет данных для экспорта</string>
+    <string name="toast_no_sessions">Сеансы отслеживания не найдены</string>
+    <string name="toast_export_failed">Сбой экспорта: %1$s</string>
+    <string name="chooser_export_gpx">Экспорт GPX</string>
+    <string name="history_title">Записанные сеансы</string>
+    <string name="history_empty">Записанные сеансы не найдены.</string>
+    <string name="history_session_num">Сеанс #%1$d</string>
+    <string name="history_start">Начало: %1$s</string>
+    <string name="history_duration">Продолжительность: %1$s</string>
+    <string name="history_export">Экспорт GPX</string>
+    <string name="history_delete">Удалить</string>
+    <string name="service_notif_title">GPS отслеживание активно</string>
+    <string name="service_notif_desc">Запись траектории в фоновом режиме...</string>
+    <string name="service_notif_stop">Остановить</string>
+</resources>

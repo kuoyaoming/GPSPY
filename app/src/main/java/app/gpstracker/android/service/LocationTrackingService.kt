@@ -113,11 +113,11 @@ class LocationTrackingService : Service() {
         )
 
         val notification: Notification = NotificationCompat.Builder(this, CHANNEL_ID)
-            .setContentTitle("GPS Tracking Active")
-            .setContentText("Recording trajectory in background...")
+            .setContentTitle(getString(R.string.service_notif_title))
+            .setContentText(getString(R.string.service_notif_desc))
             .setSmallIcon(R.mipmap.ic_launcher) // TODO: create a proper notification icon
             .setContentIntent(pendingIntent)
-            .addAction(android.R.drawable.ic_media_pause, "Stop Tracking", stopPendingIntent)
+            .addAction(android.R.drawable.ic_media_pause, getString(R.string.service_notif_stop), stopPendingIntent)
             .setOngoing(true)
             .build()
 

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GpsTracker</string>
+    <string name="perm_welcome">Selamat Datang di Pelacak GPS</string>
+    <string name="perm_description">Untuk melacak lintasan Anda, kami memerlukan izin lokasi dan notifikasi.</string>
+    <string name="perm_grant_button">Berikan Izin</string>
+    <string name="perm_bg_title">Izin Lokasi Latar Belakang Diperlukan</string>
+    <string name="perm_bg_description">Pelacak GPS mengumpulkan data lokasi untuk memungkinkan perekaman lintasan gerakan 3D Anda bahkan ketika aplikasi ditutup atau tidak digunakan. Ini penting untuk pendakian panjang atau penerbangan di mana Anda mungkin mematikan layar untuk menghemat baterai.</string>
+    <string name="perm_understand_button">Saya Mengerti</string>
+    <string name="tab_record">Rekam</string>
+    <string name="tab_manager">Manajer</string>
+    <string name="gps_disabled_title">GPS Dinonaktifkan</string>
+    <string name="gps_disabled_message">GPS Anda sepertinya dinonaktifkan. Harap aktifkan di pengaturan sistem untuk mengizinkan pelacakan.</string>
+    <string name="gps_disabled_enable">Aktifkan GPS</string>
+    <string name="gps_disabled_dismiss">Tutup</string>
+    <string name="track_title">Sesi Pelacakan GPS</string>
+    <string name="track_status_recording">Status: MEREKAM...</string>
+    <string name="track_status_idle">Status: DIAM</string>
+    <string name="track_button_stop">Hentikan Pelacakan</string>
+    <string name="track_button_start">Mulai Pelacakan</string>
+    <string name="track_data_title">Data GPS Saat Ini:</string>
+    <string name="track_gnss_title">Info GNSS:</string>
+    <string name="track_freq_label">Frekuensi Perekaman: %1$d detik</string>
+    <string name="track_freq_hint">Pembaruan dinamis - tidak perlu menghentikan pelacakan</string>
+    <string name="track_export_button">Ekspor Sesi Terbaru sebagai GPX</string>
+    <string name="toast_no_data">Tidak ada data untuk diekspor</string>
+    <string name="toast_no_sessions">Tidak ada sesi pelacakan yang ditemukan</string>
+    <string name="toast_export_failed">Ekspor gagal: %1$s</string>
+    <string name="chooser_export_gpx">Ekspor GPX</string>
+    <string name="history_title">Sesi yang Direkam</string>
+    <string name="history_empty">Tidak ada sesi yang direkam yang ditemukan.</string>
+    <string name="history_session_num">Sesi #%1$d</string>
+    <string name="history_start">Mulai: %1$s</string>
+    <string name="history_duration">Durasi: %1$s</string>
+    <string name="history_export">Ekspor GPX</string>
+    <string name="history_delete">Hapus</string>
+    <string name="service_notif_title">Pelacakan GPS Aktif</string>
+    <string name="service_notif_desc">Merekam lintasan di latar belakang...</string>
+    <string name="service_notif_stop">Hentikan Pelacakan</string>
+</resources>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GpsTracker</string>
+    <string name="perm_welcome">مرحباً بك في متتبع GPS</string>
+    <string name="perm_description">لتتبع مسارك، نحتاج إلى أذونات الموقع والإشعارات.</string>
+    <string name="perm_grant_button">منح الأذونات</string>
+    <string name="perm_bg_title">الموقع في الخلفية مطلوب</string>
+    <string name="perm_bg_description">يجمع متتبع GPS بيانات الموقع لتمكين تسجيل مسار حركتك ثلاثي الأبعاد حتى عندما يكون التطبيق مغلقًا أو غير مستخدم. هذا ضروري للمشي لمسافات طويلة أو الرحلات الجوية حيث قد تقوم بإيقاف تشغيل شاشتك لتوفير البطارية.</string>
+    <string name="perm_understand_button">أفهم ذلك</string>
+    <string name="tab_record">تسجيل</string>
+    <string name="tab_manager">مدير</string>
+    <string name="gps_disabled_title">GPS معطل</string>
+    <string name="gps_disabled_message">يبدو أن GPS لديك معطل. يرجى تمكينه في إعدادات النظام للسماح بالتتبع.</string>
+    <string name="gps_disabled_enable">تمكين GPS</string>
+    <string name="gps_disabled_dismiss">استبعاد</string>
+    <string name="track_title">جلسة تتبع GPS</string>
+    <string name="track_status_recording">الحالة: جارٍ التسجيل...</string>
+    <string name="track_status_idle">الحالة: خامل</string>
+    <string name="track_button_stop">إيقاف التتبع</string>
+    <string name="track_button_start">بدء التتبع</string>
+    <string name="track_data_title">بيانات GPS الحالية:</string>
+    <string name="track_gnss_title">معلومات GNSS:</string>
+    <string name="track_freq_label">تردد التسجيل: %1$d ثانية</string>
+    <string name="track_freq_hint">تحديثات ديناميكية - لا حاجة للإيقاف</string>
+    <string name="track_export_button">تصدير أحدث جلسة كـ GPX</string>
+    <string name="toast_no_data">لا توجد بيانات لتصديرها</string>
+    <string name="toast_no_sessions">لم يتم العثور على جلسات تتبع</string>
+    <string name="toast_export_failed">فشل التصدير: %1$s</string>
+    <string name="chooser_export_gpx">تصدير GPX</string>
+    <string name="history_title">الجلسات المسجلة</string>
+    <string name="history_empty">لم يتم العثور على جلسات مسجلة.</string>
+    <string name="history_session_num">جلسة #%1$d</string>
+    <string name="history_start">بداية: %1$s</string>
+    <string name="history_duration">مدة: %1$s</string>
+    <string name="history_export">تصدير GPX</string>
+    <string name="history_delete">حذف</string>
+    <string name="service_notif_title">تتبع GPS نشط</string>
+    <string name="service_notif_desc">جارٍ تسجيل المسار في الخلفية...</string>
+    <string name="service_notif_stop">إيقاف التتبع</string>
+</resources>

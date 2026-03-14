@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.core.content.ContextCompat
 import com.gpsspy.gpstracker.ui.screens.PermissionScreen
 import com.gpsspy.gpstracker.ui.screens.MainScreen
+import com.gpsspy.gpstracker.ui.theme.GpsTrackerTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -28,7 +29,7 @@ class MainActivity : ComponentActivity() {
 
         enableEdgeToEdge()
         setContent {
-            MaterialTheme {
+            GpsTrackerTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background

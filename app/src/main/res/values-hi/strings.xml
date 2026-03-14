@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GpsTracker</string>
+    <string name="perm_welcome">जीपीएस ट्रैकर में आपका स्वागत है</string>
+    <string name="perm_description">आपके पथ को ट्रैक करने के लिए, हमें स्थान और अधिसूचना अनुमतियों की आवश्यकता है।</string>
+    <string name="perm_grant_button">अनुमतियां प्रदान करें</string>
+    <string name="perm_bg_title">पृष्ठभूमि स्थान आवश्यक</string>
+    <string name="perm_bg_description">जीपीएस ट्रैकर स्थान डेटा एकत्र करता है ताकि ऐप बंद होने या उपयोग में न होने पर भी आपके 3D मूवमेंट ट्रैजेक्टरी की रिकॉर्डिंग सक्षम की जा सके। यह उन लंबी पैदल यात्रा या उड़ानों के लिए आवश्यक है जहां आप बैटरी बचाने के लिए अपनी स्क्रीन बंद कर सकते हैं।</string>
+    <string name="perm_understand_button">मैं समझता हूँ</string>
+    <string name="tab_record">रिकॉर्ड</string>
+    <string name="tab_manager">प्रबंधक</string>
+    <string name="gps_disabled_title">GPS निष्क्रिय है</string>
+    <string name="gps_disabled_message">आपका GPS निष्क्रिय प्रतीत होता है। कृपया ट्रैकिंग की अनुमति देने के लिए इसे सिस्टम सेटिंग्स में सक्षम करें।</string>
+    <string name="gps_disabled_enable">GPS सक्षम करें</string>
+    <string name="gps_disabled_dismiss">खारिज करें</string>
+    <string name="track_title">GPS ट्रैकिंग सत्र</string>
+    <string name="track_status_recording">स्थिति: रिकॉर्ड हो रहा है...</string>
+    <string name="track_status_idle">स्थिति: निष्क्रिय</string>
+    <string name="track_button_stop">ट्रैकिंग रोकें</string>
+    <string name="track_button_start">ट्रैकिंग शुरू करें</string>
+    <string name="track_data_title">वर्तमान GPS डेटा:</string>
+    <string name="track_gnss_title">GNSS जानकारी:</string>
+    <string name="track_freq_label">रिकॉर्डिंग आवृत्ति: %1$d सेकंड</string>
+    <string name="track_freq_hint">गतिशील अद्यतन - रुकने की आवश्यकता नहीं</string>
+    <string name="track_export_button">GPX के रूप में नवीनतम सत्र निर्यात करें</string>
+    <string name="toast_no_data">निर्यात करने के लिए कोई डेटा नहीं</string>
+    <string name="toast_no_sessions">कोई ट्रैकिंग सत्र नहीं मिला</string>
+    <string name="toast_export_failed">निर्यात विफल: %1$s</string>
+    <string name="chooser_export_gpx">GPX निर्यात करें</string>
+    <string name="history_title">रिकॉर्ड किए गए सत्र</string>
+    <string name="history_empty">कोई रिकॉर्ड किया गया सत्र नहीं मिला।</string>
+    <string name="history_session_num">सत्र #%1$d</string>
+    <string name="history_start">प्रारंभ: %1$s</string>
+    <string name="history_duration">अवधि: %1$s</string>
+    <string name="history_export">GPX निर्यात करें</string>
+    <string name="history_delete">हटाएं</string>
+    <string name="service_notif_title">GPS ट्रैकिंग सक्रिय</string>
+    <string name="service_notif_desc">पृष्ठभूमि में प्रक्षेपवक्र रिकॉर्ड हो रहा है...</string>
+    <string name="service_notif_stop">ट्रैकिंग रोकें</string>
+</resources>

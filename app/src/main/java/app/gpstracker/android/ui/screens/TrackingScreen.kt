@@ -26,6 +26,8 @@ import androidx.compose.ui.hapticfeedback.HapticFeedbackType
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Close
+import androidx.compose.ui.res.stringResource
+import com.gpsspy.gpstracker.R
 import com.gpsspy.gpstracker.service.LocationTrackingService
 import com.gpsspy.gpstracker.ui.viewmodels.TrackingViewModel
 import com.gpsspy.gpstracker.utils.GpxGenerator
@@ -74,19 +76,19 @@ fun TrackingScreen(viewModel: TrackingViewModel = viewModel(), modifier: Modifie
     if (showGpsDisabledDialog) {
         AlertDialog(
             onDismissRequest = { /* Force user to enable or dismiss, maybe just dismissible */ },
-            title = { Text("GPS is Disabled") },
-            text = { Text("Your GPS seems to be disabled. Please enable it in the system settings to allow tracking.") },
+            title = { Text(stringResource(R.string.gps_disabled_title)) },
+            text = { Text(stringResource(R.string.gps_disabled_message)) },
             confirmButton = {
                 TextButton(onClick = {
                     val intent = Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS)
                     context.startActivity(intent)
                 }) {
-                    Text("Enable GPS")
+                    Text(stringResource(R.string.gps_disabled_enable))
                 }
             },
             dismissButton = {
                 TextButton(onClick = { showGpsDisabledDialog = false }) {
-                    Text("Dismiss")
+                    Text(stringResource(R.string.gps_disabled_dismiss))
                 }
             }
         )
@@ -101,7 +103,7 @@ fun TrackingScreen(viewModel: TrackingViewModel = viewModel(), modifier: Modifie
     ) {
         // Title
         Text(
-            text = "GPS Tracking Session",
+            text = stringResource(R.string.track_title),
             style = MaterialTheme.typography.headlineLarge,
             textAlign = TextAlign.Center
         )
@@ -109,7 +111,7 @@ fun TrackingScreen(viewModel: TrackingViewModel = viewModel(), modifier: Modifie
         // Main Controls
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(
-                text = if (isTracking) "Status: RECORDING..." else "Status: IDLE",
+                text = if (isTracking) stringResource(R.string.track_status_recording) else stringResource(R.string.track_status_idle),
                 style = MaterialTheme.typography.titleMedium,
                 color = if (isTracking) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurface
             )
@@ -130,10 +132,10 @@ fun TrackingScreen(viewModel: TrackingViewModel = viewModel(), modifier: Modifie
             ) {
                 Icon(
                     imageVector = if (isTracking) Icons.Default.Close else Icons.Default.PlayArrow,
-                    contentDescription = if (isTracking) "Stop tracking" else "Start tracking"
+                    contentDescription = if (isTracking) stringResource(R.string.track_button_stop) else stringResource(R.string.track_button_start)
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                Text(text = if (isTracking) "Stop Tracking" else "Start Tracking")
+                Text(text = if (isTracking) stringResource(R.string.track_button_stop) else stringResource(R.string.track_button_start))
             }
         }
 
@@ -142,13 +144,13 @@ fun TrackingScreen(viewModel: TrackingViewModel = viewModel(), modifier: Modifie
                 modifier = Modifier.fillMaxWidth(),
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
-                Text(text = "Current GPS Data:", style = MaterialTheme.typography.titleMedium)
+                Text(text = stringResource(R.string.track_data_title), style = MaterialTheme.typography.titleMedium)
                 Text(text = "Lat: ${currentLocation?.latitude}, Lon: ${currentLocation?.longitude}", style = MaterialTheme.typography.bodyMedium)
                 Text(text = "Alt: ${currentLocation?.altitude}m, Speed: ${currentLocation?.speed}m/s", style = MaterialTheme.typography.bodyMedium)
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                Text(text = "GNSS Info:", style = MaterialTheme.typography.titleMedium)
+                Text(text = stringResource(R.string.track_gnss_title), style = MaterialTheme.typography.titleMedium)
                 val usedConstellations = remember(satellites) { satellites.filter { it.usedInFix }.map { it.constellationType }.toSet() }
                 val availableConstellations = remember(satellites) { satellites.map { it.constellationType }.toSet() }
 
@@ -171,16 +173,22 @@ fun TrackingScreen(viewModel: TrackingViewModel = viewModel(), modifier: Modifie
             horizontalAlignment = Alignment.CenterHorizontally,
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text(text = "Recording Frequency: ${frequencyMs / 1000} seconds")
+            Text(text = stringResource(R.string.track_freq_label, frequencyMs / 1000))
+            
+            val sliderIndex = if (frequencyMs <= 1000L) 0f else (frequencyMs / 5000.0).let { Math.round(it) }.coerceIn(1L, 12L).toFloat()
+            
             Slider(
-                value = frequencyMs.toFloat(),
-                onValueChange = { viewModel.updateFrequency(it.toLong()) },
-                valueRange = 1000f..60000f, // 1 sec to 60 sec
-                steps = 59,
+                value = sliderIndex,
+                onValueChange = { index -> 
+                    val newFreq = if (index.toInt() == 0) 1000L else index.toLong() * 5000L
+                    viewModel.updateFrequency(newFreq)
+                },
+                valueRange = 0f..12f,
+                steps = 11,
                 modifier = Modifier.padding(horizontal = 16.dp)
             )
             Text(
-                text = "Dynamic updates - no need to stop tracking",
+                text = stringResource(R.string.track_freq_hint),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
@@ -195,19 +203,19 @@ fun TrackingScreen(viewModel: TrackingViewModel = viewModel(), modifier: Modifie
                         val points = viewModel.getPointsForSession(sessionId)
                         if (points.isNotEmpty()) {
                             val gpxString = GpxGenerator.generateGpx(points, "Session $sessionId")
-                            exportGpxFile(context, gpxString, "Session_$sessionId.gpx")
+                            exportGpxFile(context, gpxString, "Session_${sessionId}.gpx")
                         } else {
-                            Toast.makeText(context, "No data to export", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, context.getString(R.string.toast_no_data), Toast.LENGTH_SHORT).show()
                         }
                     } else {
-                        Toast.makeText(context, "No tracking sessions found", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, context.getString(R.string.toast_no_sessions), Toast.LENGTH_SHORT).show()
                     }
                 }
             },
             modifier = Modifier.padding(bottom = 32.dp),
             enabled = !isTracking // Prevent export while active to ensure data consistency
         ) {
-            Text("Export Latest Session as GPX")
+            Text(stringResource(R.string.track_export_button))
         }
     }
 }
@@ -235,9 +243,9 @@ private fun exportGpxFile(context: Context, gpxContent: String, fileName: String
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         }
 
-        context.startActivity(Intent.createChooser(intent, "Export GPX"))
+        context.startActivity(Intent.createChooser(intent, context.getString(R.string.chooser_export_gpx)))
     } catch (e: Exception) {
-        Toast.makeText(context, "Export failed: ${e.message}", Toast.LENGTH_LONG).show()
+        Toast.makeText(context, context.getString(R.string.toast_export_failed, e.message.toString()), Toast.LENGTH_LONG).show()
     }
 }
 

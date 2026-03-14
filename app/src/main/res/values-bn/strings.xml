@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GpsTracker</string>
+    <string name="perm_welcome">জিপিএস ট্র্যাকারে স্বাগতম</string>
+    <string name="perm_description">আপনার গতিপথ ট্র্যাক করতে, আমাদের অবস্থান এবং বিজ্ঞপ্তি অনুমতি প্রয়োজন।</string>
+    <string name="perm_grant_button">অনুমতি মঞ্জুর করুন</string>
+    <string name="perm_bg_title">পটভূমি অবস্থান প্রয়োজন</string>
+    <string name="perm_bg_description">অ্যাপ বন্ধ থাকলেও বা ব্যবহার না হলেও আপনার থ্রিডি চলাচলের গতিপথ রেকর্ড করতে জিপিএস ট্র্যাকার লোকেশন ডেটা সংগ্রহ করে। লম্বা হাইকিং বা ফ্লাইটের জন্য এটি প্রয়োজনীয়, যেখানে ব্যাটারি বাঁচাতে আপনি আপনার স্ক্রিন বন্ধ রাখতে পারেন।</string>
+    <string name="perm_understand_button">আমি বুঝতে পেরেছি</string>
+    <string name="tab_record">রেকর্ড</string>
+    <string name="tab_manager">ম্যানেজার</string>
+    <string name="gps_disabled_title">GPS নিষ্ক্রিয়</string>
+    <string name="gps_disabled_message">আপনার GPS নিষ্ক্রিয় বলে মনে হচ্ছে। ট্র্যাকিং অনুমোদন করতে দয়া করে এটি সিস্টেম সেটিংসে চালু করুন।</string>
+    <string name="gps_disabled_enable">GPS চালু করুন</string>
+    <string name="gps_disabled_dismiss">বাতিল করুন</string>
+    <string name="track_title">GPS ট্র্যাকিং সেশন</string>
+    <string name="track_status_recording">স্ট্যাটাস: রেকর্ডিং...</string>
+    <string name="track_status_idle">স্ট্যাটাস: অলস</string>
+    <string name="track_button_stop">ট্র্যাকিং থামান</string>
+    <string name="track_button_start">ট্র্যাকিং শুরু করুন</string>
+    <string name="track_data_title">বর্তমান GPS ডেটা:</string>
+    <string name="track_gnss_title">GNSS তথ্য:</string>
+    <string name="track_freq_label">রেকর্ডিং ফ্রিকোয়েন্সি: %1$d সেকেন্ড</string>
+    <string name="track_freq_hint">ডাইনামিক আপডেট - ট্র্যাকিং থামানোর প্রয়োজন নেই</string>
+    <string name="track_export_button">GPX হিসেবে সর্বশেষ সেশন এক্সপোর্ট করুন</string>
+    <string name="toast_no_data">এক্সপোর্ট করার মতো কোনো ডেটা নেই</string>
+    <string name="toast_no_sessions">কোনো ট্র্যাকিং সেশন পাওয়া যায়নি</string>
+    <string name="toast_export_failed">এক্সপোর্ট ব্যর্থ: %1$s</string>
+    <string name="chooser_export_gpx">GPX এক্সপোর্ট করুন</string>
+    <string name="history_title">রেকর্ড করা সেশনগুলি</string>
+    <string name="history_empty">কোনো রেকর্ড করা সেশন পাওয়া যায়নি।</string>
+    <string name="history_session_num">সেশন #%1$d</string>
+    <string name="history_start">শুরু: %1$s</string>
+    <string name="history_duration">সময়কাল: %1$s</string>
+    <string name="history_export">GPX এক্সপোর্ট করুন</string>
+    <string name="history_delete">মুছে ফেলুন</string>
+    <string name="service_notif_title">GPS ট্র্যাকিং সক্রিয়</string>
+    <string name="service_notif_desc">পটভূমিতে গতিপথ রেকর্ড করা হচ্ছে...</string>
+    <string name="service_notif_stop">ট্র্যাকিং থামান</string>
+</resources>

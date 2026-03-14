@@ -9,8 +9,10 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.gpsspy.gpstracker.R
 
 @Composable
 fun PermissionScreen(
@@ -56,13 +58,13 @@ fun PermissionScreen(
     ) {
         if (!showBackgroundDisclosure) {
             Text(
-                text = "Welcome to GPS Tracker",
+                text = stringResource(R.string.perm_welcome),
                 style = MaterialTheme.typography.headlineMedium,
                 textAlign = TextAlign.Center
             )
             Spacer(modifier = Modifier.height(16.dp))
             Text(
-                text = "To track your trajectory, we need location and notification permissions.",
+                text = stringResource(R.string.perm_description),
                 style = MaterialTheme.typography.bodyLarge,
                 textAlign = TextAlign.Center
             )
@@ -74,18 +76,18 @@ fun PermissionScreen(
                     requestForegroundLocation(foregroundPermissionLauncher)
                 }
             }) {
-                Text("Grant Permissions")
+                Text(stringResource(R.string.perm_grant_button))
             }
         } else {
             // PROMINENT DISCLOSURE SCREEN (Crucial for Google Play Policy)
             Text(
-                text = "Background Location Required",
+                text = stringResource(R.string.perm_bg_title),
                 style = MaterialTheme.typography.headlineMedium,
                 textAlign = TextAlign.Center
             )
             Spacer(modifier = Modifier.height(16.dp))
             Text(
-                text = "GPS Tracker collects location data to enable recording of your 3D movement trajectory even when the app is closed or not in use. This is necessary for long hikes or flights where you might turn off your screen to save battery.",
+                text = stringResource(R.string.perm_bg_description),
                 style = MaterialTheme.typography.bodyLarge,
                 textAlign = TextAlign.Center
             )
@@ -97,7 +99,7 @@ fun PermissionScreen(
                     onPermissionsGranted()
                 }
             }) {
-                Text("I Understand")
+                Text(stringResource(R.string.perm_understand_button))
             }
         }
     }

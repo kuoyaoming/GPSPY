@@ -15,12 +15,14 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
+import com.gpsspy.gpstracker.R
 
 @Composable
 fun MainScreen() {
     var selectedTab by remember { mutableStateOf(0) }
 
-    val tabs = listOf("Record", "Manager")
+    val tabs = listOf(stringResource(R.string.tab_record), stringResource(R.string.tab_manager))
     val icons = listOf(Icons.Default.LocationOn, Icons.AutoMirrored.Filled.List)
 
     Scaffold(

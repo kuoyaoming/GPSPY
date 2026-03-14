@@ -1,4 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">GpsTracker</string>
+    <string name="perm_welcome">Welcome to GPS Tracker</string>
+    <string name="perm_description">To track your trajectory, we need location and notification permissions.</string>
+    <string name="perm_grant_button">Grant Permissions</string>
+    <string name="perm_bg_title">Background Location Required</string>
+    <string name="perm_bg_description">GPS Tracker collects location data to enable recording of your 3D movement trajectory even when the app is closed or not in use. This is necessary for long hikes or flights where you might turn off your screen to save battery.</string>
+    <string name="perm_understand_button">I Understand</string>
+    <string name="tab_record">Record</string>
+    <string name="tab_manager">Manager</string>
+    <string name="gps_disabled_title">GPS is Disabled</string>
+    <string name="gps_disabled_message">Your GPS seems to be disabled. Please enable it in the system settings to allow tracking.</string>
+    <string name="gps_disabled_enable">Enable GPS</string>
+    <string name="gps_disabled_dismiss">Dismiss</string>
+    <string name="track_title">GPS Tracking Session</string>
+    <string name="track_status_recording">Status: RECORDING...</string>
+    <string name="track_status_idle">Status: IDLE</string>
+    <string name="track_button_stop">Stop Tracking</string>
+    <string name="track_button_start">Start Tracking</string>
+    <string name="track_data_title">Current GPS Data:</string>
+    <string name="track_gnss_title">GNSS Info:</string>
+    <string name="track_freq_label">Recording Frequency: %1$d seconds</string>
+    <string name="track_freq_hint">Dynamic updates - no need to stop tracking</string>
+    <string name="track_export_button">Export Latest Session as GPX</string>
+    <string name="toast_no_data">No data to export</string>
+    <string name="toast_no_sessions">No tracking sessions found</string>
+    <string name="toast_export_failed">Export failed: %1$s</string>
+    <string name="chooser_export_gpx">Export GPX</string>
+    <string name="history_title">Recorded Sessions</string>
+    <string name="history_empty">No recorded sessions found.</string>
+    <string name="history_session_num">Session #%1$d</string>
+    <string name="history_start">Start: %1$s</string>
+    <string name="history_duration">Duration: %1$s</string>
+    <string name="history_export">Export GPX</string>
+    <string name="history_delete">Delete</string>
+    <string name="service_notif_title">GPS Tracking Active</string>
+    <string name="service_notif_desc">Recording trajectory in background...</string>
+    <string name="service_notif_stop">Stop Tracking</string>
 </resources>

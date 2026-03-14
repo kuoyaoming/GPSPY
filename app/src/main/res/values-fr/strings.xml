@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">GpsTracker</string>
+    <string name="perm_welcome">Bienvenue sur GPS Tracker</string>
+    <string name="perm_description">Pour suivre votre trajectoire, nous avons besoin d\'autorisations de localisation et de notification.</string>
+    <string name="perm_grant_button">Accorder les autorisations</string>
+    <string name="perm_bg_title">Localisation en arrière-plan requise</string>
+    <string name="perm_bg_description">GPS Tracker collecte des données de localisation pour permettre l\'enregistrement de votre trajectoire de mouvement 3D même lorsque l\'application est fermée ou inutilisée. Cela est nécessaire pour les longues randonnées ou les vols où vous pourriez éteindre votre écran pour économiser la batterie.</string>
+    <string name="perm_understand_button">Je comprends</string>
+    <string name="tab_record">Enregistrer</string>
+    <string name="tab_manager">Gérant</string>
+    <string name="gps_disabled_title">Le GPS est désactivé</string>
+    <string name="gps_disabled_message">Votre GPS semble être désactivé. Veuillez l\'activer dans les paramètres du système pour autoriser le suivi.</string>
+    <string name="gps_disabled_enable">Activer le GPS</string>
+    <string name="gps_disabled_dismiss">Ignorer</string>
+    <string name="track_title">Session de suivi GPS</string>
+    <string name="track_status_recording">Statut: ENREGISTREMENT...</string>
+    <string name="track_status_idle">Statut: INACTIF</string>
+    <string name="track_button_stop">Arrêter le suivi</string>
+    <string name="track_button_start">Démarrer le suivi</string>
+    <string name="track_data_title">Données GPS actuelles:</string>
+    <string name="track_gnss_title">Infos GNSS:</string>
+    <string name="track_freq_label">Fréquence d\'enregistrement: %1$d secondes</string>
+    <string name="track_freq_hint">Mises à jour dynamiques - pas besoin d\'arrêter</string>
+    <string name="track_export_button">Exporter la dernière session en GPX</string>
+    <string name="toast_no_data">Aucune donnée à exporter</string>
+    <string name="toast_no_sessions">Aucune session de suivi trouvée</string>
+    <string name="toast_export_failed">Échec de l\'exportation: %1$s</string>
+    <string name="chooser_export_gpx">Exporter GPX</string>
+    <string name="history_title">Sessions enregistrées</string>
+    <string name="history_empty">Aucune session enregistrée trouvée.</string>
+    <string name="history_session_num">Session #%1$d</string>
+    <string name="history_start">Début: %1$s</string>
+    <string name="history_duration">Durée: %1$s</string>
+    <string name="history_export">Exporter GPX</string>
+    <string name="history_delete">Supprimer</string>
+    <string name="service_notif_title">Suivi GPS actif</string>
+    <string name="service_notif_desc">Enregistrement de la trajectoire en arrière-plan...</string>
+    <string name="service_notif_stop">Arrêter le suivi</string>
+</resources>

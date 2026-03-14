@@ -23,6 +23,8 @@ import java.io.File
 import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
+import androidx.compose.ui.res.stringResource
+import com.gpsspy.gpstracker.R
 
 @Composable
 fun HistoryScreen(viewModel: HistoryViewModel = viewModel(), modifier: Modifier = Modifier) {
@@ -32,14 +34,14 @@ fun HistoryScreen(viewModel: HistoryViewModel = viewModel(), modifier: Modifier 
 
     Column(modifier = modifier.fillMaxSize().padding(16.dp)) {
         Text(
-            text = "Recorded Sessions",
+            text = stringResource(R.string.history_title),
             style = MaterialTheme.typography.headlineMedium,
             modifier = Modifier.padding(bottom = 16.dp)
         )
 
         if (sessions.isEmpty()) {
             Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                Text("No recorded sessions found.")
+                Text(stringResource(R.string.history_empty))
             }
         } else {
             LazyColumn(verticalArrangement = Arrangement.spacedBy(12.dp)) {
@@ -53,7 +55,7 @@ fun HistoryScreen(viewModel: HistoryViewModel = viewModel(), modifier: Modifier 
                                     val gpxString = GpxGenerator.generateGpx(points, "Session ${session.sessionId}")
                                     exportGpxFile(context, gpxString, "Session_${session.sessionId}.gpx")
                                 } else {
-                                    Toast.makeText(context, "No data to export", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context, context.getString(R.string.toast_no_data), Toast.LENGTH_SHORT).show()
                                 }
                             }
                         },
@@ -78,19 +80,19 @@ fun SessionItem(session: SessionSummary, onExport: () -> Unit, onDelete: () -> U
 
     Card(modifier = Modifier.fillMaxWidth()) {
         Column(modifier = Modifier.padding(16.dp)) {
-            Text(text = "Session #${session.sessionId}", style = MaterialTheme.typography.titleMedium)
+            Text(text = stringResource(R.string.history_session_num, session.sessionId), style = MaterialTheme.typography.titleMedium)
             Spacer(modifier = Modifier.height(4.dp))
-            Text(text = "Start: $startTimeStr", style = MaterialTheme.typography.bodyMedium)
-            Text(text = "Duration: $durationStr", style = MaterialTheme.typography.bodyMedium)
+            Text(text = stringResource(R.string.history_start, startTimeStr), style = MaterialTheme.typography.bodyMedium)
+            Text(text = stringResource(R.string.history_duration, durationStr), style = MaterialTheme.typography.bodyMedium)
 
             Spacer(modifier = Modifier.height(8.dp))
             Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
                 TextButton(onClick = onExport) {
-                    Text("Export GPX")
+                    Text(stringResource(R.string.history_export))
                 }
                 Spacer(modifier = Modifier.width(8.dp))
                 Button(onClick = onDelete, colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error)) {
-                    Text("Delete")
+                    Text(stringResource(R.string.history_delete))
                 }
             }
         }
@@ -119,9 +121,9 @@ private fun exportGpxFile(context: Context, gpxContent: String, fileName: String
             addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
         }
 
-        context.startActivity(Intent.createChooser(intent, "Export GPX"))
+        context.startActivity(Intent.createChooser(intent, context.getString(R.string.chooser_export_gpx)))
     } catch (e: Exception) {
-        Toast.makeText(context, "Export failed: ${e.message}", Toast.LENGTH_LONG).show()
+        Toast.makeText(context, context.getString(R.string.toast_export_failed, e.message.toString()), Toast.LENGTH_LONG).show()
     }
 }
 
