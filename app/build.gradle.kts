@@ -22,9 +22,20 @@ android {
         }
     }
 
+    signingConfigs {
+        create("release") {
+            // These will be populated from command line properties in CI
+            storeFile = project.findProperty("android.signingConfigs.release.storeFile")?.let { file(it) }
+            storePassword = project.findProperty("android.signingConfigs.release.storePassword") as String?
+            keyAlias = project.findProperty("android.signingConfigs.release.keyAlias") as String?
+            keyPassword = project.findProperty("android.signingConfigs.release.keyPassword") as String?
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = true
+            signingConfig = signingConfigs.getByName("release")
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"

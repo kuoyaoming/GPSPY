@@ -160,7 +160,6 @@ class LocationTrackingService : Service() {
             locationCallback = object : LocationCallback() {
                 override fun onLocationResult(locationResult: LocationResult) {
                     for (location in locationResult.locations) {
-                        Log.d("LocationService", "Loc: lat=${location.latitude}, lon=${location.longitude}, alt=${location.altitude}")
                         _currentLocation.value = location
                         serviceScope.launch {
                             val point = LocationPoint(
