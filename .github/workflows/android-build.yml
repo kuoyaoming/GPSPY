@@ -43,21 +43,21 @@ jobs:
             echo "$KEYSTORE_BASE64" | tr -d '[:space:]' | base64 -d > release.keystore
           fi
 
-      - name: Build Release App Bundle (AAB)
+      - name: Build Release App Bundle (AAB) & APK
         env:
           STORE_PASSWORD: ${{ secrets.STORE_PASSWORD }}
           KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
           KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
         run: |
           if [ -f release.keystore ]; then
-            ./gradlew bundleRelease \
+            ./gradlew bundleRelease assembleRelease \
               -Pandroid.signingConfigs.release.storeFile=$(pwd)/release.keystore \
               -Pandroid.signingConfigs.release.storePassword="$STORE_PASSWORD" \
               -Pandroid.signingConfigs.release.keyAlias="$KEY_ALIAS" \
               -Pandroid.signingConfigs.release.keyPassword="$KEY_PASSWORD"
           else
             echo "Keystore not found, skipping signing."
-            ./gradlew bundleRelease
+            ./gradlew bundleRelease assembleRelease
           fi
 
       - name: Upload Debug APK Artifact
