@@ -1,4 +1,4 @@
-package com.example.gpstracker.ui.screens
+package app.gpstracker.android.ui.screens
 
 import android.content.Context
 import android.content.Intent
@@ -15,9 +15,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.content.FileProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.gpstracker.data.database.SessionSummary
-import com.example.gpstracker.ui.viewmodels.HistoryViewModel
-import com.example.gpstracker.utils.GpxGenerator
+import app.gpstracker.android.data.database.SessionSummary
+import app.gpstracker.android.ui.viewmodels.HistoryViewModel
+import app.gpstracker.android.utils.GpxGenerator
 import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream

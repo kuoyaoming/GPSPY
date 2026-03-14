@@ -1,4 +1,4 @@
-package com.example.gpstracker
+package app.gpstracker.android
 
 import android.Manifest
 import android.content.pm.PackageManager
@@ -16,8 +16,8 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.core.content.ContextCompat
-import com.example.gpstracker.ui.screens.PermissionScreen
-import com.example.gpstracker.ui.screens.MainScreen
+import app.gpstracker.android.ui.screens.PermissionScreen
+import app.gpstracker.android.ui.screens.MainScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

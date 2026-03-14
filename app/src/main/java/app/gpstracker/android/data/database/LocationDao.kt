@@ -1,4 +1,4 @@
-package com.example.gpstracker.data.database
+package app.gpstracker.android.data.database
 
 import androidx.room.Dao
 import androidx.room.Insert

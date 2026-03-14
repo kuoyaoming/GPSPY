@@ -1,4 +1,4 @@
-package com.example.gpstracker.service
+package app.gpstracker.android.service
 
 import android.Manifest
 import android.content.Context
