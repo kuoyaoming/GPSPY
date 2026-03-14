@@ -20,6 +20,11 @@
 
 ---
 
+## 🚀 Downloads
+You can download the latest version of the app directly from our **[GitHub Releases](https://github.com/kuoyaoming/GPSPY/releases)** page.
+
+---
+
 ## ✨ Key Features
 
 * **High-Accuracy 3D Tracking:** Captures precise latitude, longitude, altitude (`<ele>` tag in GPX), speed, and bearing.
