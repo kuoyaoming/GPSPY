@@ -34,12 +34,13 @@ jobs:
           KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
         run: |
           if [ -n "$KEYSTORE_BASE64" ]; then
-            # Write to a temporary file first
-            echo "$KEYSTORE_BASE64" > keystore.tmp
-            # Try to decode with base64 -d
-            base64 -d keystore.tmp > release.keystore || base64 --decode keystore.tmp > release.keystore
-            echo "Keystore file created."
-            ls -l release.keystore
+            printf '%s' "$KEYSTORE_BASE64" | tr -d '\n' | base64 --decode > release.keystore
+            if [ $? -eq 0 ]; then
+              echo "Keystore successfully decoded."
+            else
+              echo "Error decoding keystore."
+              exit 1
+            fi
           fi
 
       - name: Build Release App Bundle (AAB)
@@ -55,7 +56,6 @@ jobs:
               -Pandroid.signingConfigs.release.keyAlias="$KEY_ALIAS" \
               -Pandroid.signingConfigs.release.keyPassword="$KEY_PASSWORD"
           else
-            echo "Keystore not found, skipping signing."
             ./gradlew bundleRelease
           fi
 
