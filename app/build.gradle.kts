@@ -5,16 +5,20 @@ plugins {
     id("com.google.devtools.ksp")
 }
 
+val gitCommitCount = providers.exec {
+    commandLine("git", "rev-list", "--count", "HEAD")
+}.standardOutput.asText.map { it.trim().toInt() }.getOrElse(1)
+
 android {
-    namespace = "app.gpstracker.android"
+    namespace = "com.gpsspy.gpstracker"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "app.gpstracker.android"
+        applicationId = "com.gpsspy.gpstracker"
         minSdk = 26
         targetSdk = 35
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = gitCommitCount
+        versionName = "1.0.$gitCommitCount"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
