@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace = "com.example.gpstracker"
+    namespace = "app.gpstracker.android"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "com.example.gpstracker"
+        applicationId = "app.gpstracker.android"
         minSdk = 26
         targetSdk = 35
         versionCode = 1

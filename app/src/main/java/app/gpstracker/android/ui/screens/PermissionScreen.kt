@@ -1,4 +1,4 @@
-package com.example.gpstracker.ui.screens
+package app.gpstracker.android.ui.screens
 
 import android.Manifest
 import android.os.Build

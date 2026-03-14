@@ -1,4 +1,4 @@
-package com.example.gpstracker.data.preferences
+package app.gpstracker.android.data.preferences
 
 import android.content.Context
 import androidx.datastore.core.DataStore

@@ -1,9 +1,9 @@
-package com.example.gpstracker.di
+package app.gpstracker.android.di
 
 import android.content.Context
-import com.example.gpstracker.data.database.AppDatabase
-import com.example.gpstracker.data.database.LocationDao
-import com.example.gpstracker.data.preferences.SettingsRepository
+import app.gpstracker.android.data.database.AppDatabase
+import app.gpstracker.android.data.database.LocationDao
+import app.gpstracker.android.data.preferences.SettingsRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -35,7 +35,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideGnssStatusManager(@ApplicationContext context: Context): com.example.gpstracker.service.GnssStatusManager {
-        return com.example.gpstracker.service.GnssStatusManager(context)
+    fun provideGnssStatusManager(@ApplicationContext context: Context): app.gpstracker.android.service.GnssStatusManager {
+        return app.gpstracker.android.service.GnssStatusManager(context)
     }
 }
