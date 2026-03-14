@@ -1,18 +1,13 @@
-<div align="center">
-  <img src="app/src/main/res/mipmap-xxxhdpi/ic_launcher.webp" alt="GPS Tracker Logo" width="120" />
-  <h1>Open GPS Tracker (GPSPY)</h1>
-  <p>一個離線優先、高精準度的 Android 3D 軌跡追蹤應用程式。</p>
-  <p>
-    <a href="README.md">English</a> | <b>繁體中文</b>
-  </p>
-</div>
+# Open GPS Tracker (GPSPY)
 
-<div align="center">
-  <img src="https://img.shields.io/badge/Platform-Android-3DDC84?style=flat-square&logo=android" alt="Platform: Android" />
-  <img src="https://img.shields.io/badge/Language-Kotlin-7F52FF?style=flat-square&logo=kotlin" alt="Language: Kotlin" />
-  <img src="https://img.shields.io/badge/UI-Jetpack_Compose-4285F4?style=flat-square&logo=android" alt="UI: Jetpack Compose" />
-  <img src="https://img.shields.io/badge/License-Apache_2.0-blue?style=flat-square" alt="License: Apache 2.0" />
-</div>
+一個離線優先、高精準度的 Android 3D 軌跡追蹤應用程式。
+
+[English](README.md) | **繁體中文**
+
+![Platform: Android](https://img.shields.io/badge/Platform-Android-3DDC84?style=flat-square&logo=android)
+![Language: Kotlin](https://img.shields.io/badge/Language-Kotlin-7F52FF?style=flat-square&logo=kotlin)
+![UI: Jetpack Compose](https://img.shields.io/badge/UI-Jetpack_Compose-4285F4?style=flat-square&logo=android)
+![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue?style=flat-square)
 
 <br />
 

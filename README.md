@@ -1,18 +1,13 @@
-<div align="center">
-  <img src="app/src/main/res/mipmap-xxxhdpi/ic_launcher.webp" alt="GPS Tracker Logo" width="120" />
-  <h1>Open GPS Tracker</h1>
-  <p>An offline-first, high-accuracy 3D trajectory tracking app for Android.</p>
-  <p>
-    <b>English</b> | <a href="README_zh.md">繁體中文</a>
-  </p>
-</div>
+# Open GPS Tracker
 
-<div align="center">
-  <img src="https://img.shields.io/badge/Platform-Android-3DDC84?style=flat-square&logo=android" alt="Platform: Android" />
-  <img src="https://img.shields.io/badge/Language-Kotlin-7F52FF?style=flat-square&logo=kotlin" alt="Language: Kotlin" />
-  <img src="https://img.shields.io/badge/UI-Jetpack_Compose-4285F4?style=flat-square&logo=android" alt="UI: Jetpack Compose" />
-  <img src="https://img.shields.io/badge/License-Apache_2.0-blue?style=flat-square" alt="License: Apache 2.0" />
-</div>
+An offline-first, high-accuracy 3D trajectory tracking app for Android.
+
+[English](README.md) | [繁體中文](README_zh.md)
+
+![Platform: Android](https://img.shields.io/badge/Platform-Android-3DDC84?style=flat-square&logo=android)
+![Language: Kotlin](https://img.shields.io/badge/Language-Kotlin-7F52FF?style=flat-square&logo=kotlin)
+![UI: Jetpack Compose](https://img.shields.io/badge/UI-Jetpack_Compose-4285F4?style=flat-square&logo=android)
+![License: Apache 2.0](https://img.shields.io/badge/License-Apache_2.0-blue?style=flat-square)
 
 <br />
 
@@ -61,8 +56,8 @@ The app is built utilizing modern Android development practices and the latest J
 
 1. **Clone the repository:**
    ```bash
-   git clone https://github.com/your-username/gps-tracker.git
-   cd gps-tracker
+   git clone https://github.com/kuoyaoming/GPSPY.git
+   cd GPSPY
    ```
 
 2. **Open in Android Studio:**
