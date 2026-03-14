@@ -76,6 +76,8 @@ fun SessionItem(session: SessionSummary, onExport: () -> Unit, onDelete: () -> U
     val durationRemSec = durationSec % 60
     val durationStr = String.format("%02d:%02d", durationMin, durationRemSec)
 
+    var showDeleteConfirmDialog by remember { mutableStateOf(false) }
+
     Card(modifier = Modifier.fillMaxWidth()) {
         Column(modifier = Modifier.padding(16.dp)) {
             Text(text = "Session #${session.sessionId}", style = MaterialTheme.typography.titleMedium)
@@ -89,11 +91,32 @@ fun SessionItem(session: SessionSummary, onExport: () -> Unit, onDelete: () -> U
                     Text("Export GPX")
                 }
                 Spacer(modifier = Modifier.width(8.dp))
-                Button(onClick = onDelete, colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error)) {
+                Button(onClick = { showDeleteConfirmDialog = true }, colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error)) {
                     Text("Delete")
                 }
             }
         }
+    }
+
+    if (showDeleteConfirmDialog) {
+        AlertDialog(
+            onDismissRequest = { showDeleteConfirmDialog = false },
+            title = { Text("Confirm Deletion") },
+            text = { Text("Are you sure you want to delete this session? This action cannot be undone.") },
+            confirmButton = {
+                TextButton(onClick = {
+                    showDeleteConfirmDialog = false
+                    onDelete()
+                }) {
+                    Text("Delete", color = MaterialTheme.colorScheme.error)
+                }
+            },
+            dismissButton = {
+                TextButton(onClick = { showDeleteConfirmDialog = false }) {
+                    Text("Cancel")
+                }
+            }
+        )
     }
 }
 
