@@ -35,11 +35,8 @@ jobs:
         run: |
           if [ -n "$KEYSTORE_BASE64" ]; then
             echo "$KEYSTORE_BASE64" | tr -d '[:space:]' | base64 -d > release.keystore
-            if [ $? -eq 0 ]; then
-              echo "Keystore successfully decoded."
-              ls -l release.keystore
-            else
-              echo "Error decoding keystore."
+            if [ $? -ne 0 ]; then
+              echo "Failed to decode keystore"
               exit 1
             fi
           fi
@@ -74,12 +71,10 @@ jobs:
           path: app/build/outputs/bundle/release/app-release.aab
 
       - name: Upload to Google Play
-        env:
-          SERVICE_ACCOUNT_JSON: ${{ secrets.SERVICE_ACCOUNT_JSON }}
-        run: |
-          if [ -n "$SERVICE_ACCOUNT_JSON" ]; then
-            echo "$SERVICE_ACCOUNT_JSON" > service-account.json
-            npx upload-google-play@latest --serviceAccountJson service-account.json --packageName com.kuoyaoming.gpspy --releaseFiles app/build/outputs/bundle/release/app-release.aab --track internal
-          else
-            echo "Skipping Play Store upload as SERVICE_ACCOUNT_JSON is not set."
-          fi
+        if: secrets.SERVICE_ACCOUNT_JSON != ''
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT_JSON }}
+          packageName: com.kuoyaoming.gpspy
+          releaseFiles: app/build/outputs/bundle/release/app-release.aab
+          track: internal
