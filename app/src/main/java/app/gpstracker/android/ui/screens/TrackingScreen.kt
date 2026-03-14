@@ -21,12 +21,20 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.core.content.FileProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
+import androidx.compose.ui.platform.LocalHapticFeedback
+import androidx.compose.ui.hapticfeedback.HapticFeedbackType
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.filled.Close
 import com.gpsspy.gpstracker.service.LocationTrackingService
 import com.gpsspy.gpstracker.ui.viewmodels.TrackingViewModel
 import com.gpsspy.gpstracker.utils.GpxGenerator
 import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
+private val CONSTELLATION_MAP = mapOf(
+    1 to "GPS", 2 to "SBAS", 3 to "GLONASS", 4 to "QZSS", 5 to "BEIDOU", 6 to "GALILEO", 7 to "IRNSS"
+)
 
 @Composable
 fun TrackingScreen(viewModel: TrackingViewModel = viewModel(), modifier: Modifier = Modifier) {
@@ -36,6 +44,7 @@ fun TrackingScreen(viewModel: TrackingViewModel = viewModel(), modifier: Modifie
     val currentLocation by viewModel.currentLocation.collectAsState()
     val satellites by viewModel.satellites.collectAsState()
     val scope = rememberCoroutineScope()
+    val haptic = LocalHapticFeedback.current
 
     var showGpsDisabledDialog by remember { mutableStateOf(false) }
 
@@ -107,6 +116,7 @@ fun TrackingScreen(viewModel: TrackingViewModel = viewModel(), modifier: Modifie
             Spacer(modifier = Modifier.height(16.dp))
             Button(
                 onClick = {
+                    haptic.performHapticFeedback(HapticFeedbackType.LongPress)
                     val intent = Intent(context, LocationTrackingService::class.java).apply {
                         action = if (isTracking) LocationTrackingService.ACTION_STOP else LocationTrackingService.ACTION_START
                     }
@@ -118,6 +128,11 @@ fun TrackingScreen(viewModel: TrackingViewModel = viewModel(), modifier: Modifie
                 },
                 modifier = Modifier.size(width = 200.dp, height = 50.dp)
             ) {
+                Icon(
+                    imageVector = if (isTracking) Icons.Default.Close else Icons.Default.PlayArrow,
+                    contentDescription = if (isTracking) "Stop tracking" else "Start tracking"
+                )
+                Spacer(modifier = Modifier.width(8.dp))
                 Text(text = if (isTracking) "Stop Tracking" else "Start Tracking")
             }
         }
@@ -134,15 +149,12 @@ fun TrackingScreen(viewModel: TrackingViewModel = viewModel(), modifier: Modifie
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Text(text = "GNSS Info:", style = MaterialTheme.typography.titleMedium)
-                val constellationMap = mapOf(
-                    1 to "GPS", 2 to "SBAS", 3 to "GLONASS", 4 to "QZSS", 5 to "BEIDOU", 6 to "GALILEO", 7 to "IRNSS"
-                )
-                val usedConstellations = satellites.filter { it.usedInFix }.map { it.constellationType }.toSet()
-                val availableConstellations = satellites.map { it.constellationType }.toSet()
+                val usedConstellations = remember(satellites) { satellites.filter { it.usedInFix }.map { it.constellationType }.toSet() }
+                val availableConstellations = remember(satellites) { satellites.map { it.constellationType }.toSet() }
 
                 Row(horizontalArrangement = Arrangement.Center, modifier = Modifier.fillMaxWidth()) {
                     availableConstellations.forEach { type ->
-                        val name = constellationMap[type] ?: "Unknown ($type)"
+                        val name = CONSTELLATION_MAP[type] ?: "Unknown ($type)"
                         val color = if (usedConstellations.contains(type)) Color.Green else Color.Red
                         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.padding(horizontal = 4.dp)) {
                             Box(modifier = Modifier.size(10.dp).background(color, CircleShape))

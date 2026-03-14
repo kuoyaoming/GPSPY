@@ -69,7 +69,7 @@ fun HistoryScreen(viewModel: HistoryViewModel = viewModel(), modifier: Modifier 
 
 @Composable
 fun SessionItem(session: SessionSummary, onExport: () -> Unit, onDelete: () -> Unit) {
-    val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+    val dateFormat = remember { SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()) }
     val startTimeStr = dateFormat.format(Date(session.startTime))
     val durationSec = session.durationMs / 1000
     val durationMin = durationSec / 60
