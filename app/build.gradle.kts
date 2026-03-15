@@ -83,6 +83,9 @@ dependencies {
     // Play Services Location
     implementation("com.google.android.gms:play-services-location:21.1.0")
 
+    // Play Services Wearable
+    implementation("com.google.android.gms:play-services-wearable:18.1.0")
+
     // Room
     val roomVersion = "2.6.1"
     implementation("androidx.room:room-runtime:$roomVersion")
