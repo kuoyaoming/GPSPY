@@ -54,6 +54,7 @@ class LocationTrackingService : Service() {
     private var currentSessionId: Long = 0L
     private var serviceScope = CoroutineScope(Dispatchers.IO + Job())
     private var locationCallback: LocationCallback? = null
+    private var wearableDataBroadcaster: WearableDataBroadcaster? = null
 
     companion object {
         const val ACTION_START = "ACTION_START_TRACKING"
@@ -77,6 +78,9 @@ class LocationTrackingService : Service() {
         wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "GpsTracker::TrackingWakeLock")
 
         createNotificationChannel()
+
+        wearableDataBroadcaster = WearableDataBroadcaster(this)
+        wearableDataBroadcaster?.startBroadcasting()
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -207,6 +211,8 @@ class LocationTrackingService : Service() {
     override fun onDestroy() {
         super.onDestroy()
         stopTracking()
+        wearableDataBroadcaster?.stopBroadcasting()
+        wearableDataBroadcaster = null
     }
 
     override fun onBind(intent: Intent?): IBinder? = null
