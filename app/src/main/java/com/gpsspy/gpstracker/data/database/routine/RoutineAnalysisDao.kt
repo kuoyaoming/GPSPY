@@ -21,6 +21,6 @@ interface RoutineAnalysisDao {
     @Query("SELECT * FROM routine_analysis WHERE endTime IS NULL ORDER BY startTime DESC LIMIT 1")
     suspend fun getCurrentState(): RoutineAnalysis?
 
-    @Query("SELECT * FROM routine_analysis WHERE startTime >= :startOfDay AND startTime < :endOfDay ORDER BY startTime ASC")
+    @Query("SELECT * FROM routine_analysis WHERE (startTime < :endOfDay) AND (endTime IS NULL OR endTime >= :startOfDay) ORDER BY startTime ASC")
     fun getAnalysesForDay(startOfDay: Long, endOfDay: Long): Flow<List<RoutineAnalysis>>
 }
