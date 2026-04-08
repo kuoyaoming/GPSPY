@@ -30,6 +30,8 @@ You can download the latest version of the app directly from our **[GitHub Relea
 * **Dynamic Frequency Control:** Adjust your recording intervals dynamically (e.g., from 1 second to 60 seconds) without needing to interrupt the active session.
 * **Comprehensive Track Management:** A clean, tabbed interface to view all historical recorded sessions, their start times, and durations.
 * **Easy Export & Deletion:** Export any specific tracking session directly to a standard `GPX 1.1` XML file or delete it permanently from the local Room database to save space.
+* **Routine Activity Analysis:** Powerful analysis engine that identifies repetitive movements, stationary periods, and high-frequency location clusters.
+* **Trajectory Data Insights:** View detailed 3D movement breakdowns and export analysis results in structured JSON format for external research.
 * **Google Play Policy Compliant:** Meets all strict background location policies (including prominent disclosures) for seamless publishing.
 
 ## 🛠 Tech Stack
