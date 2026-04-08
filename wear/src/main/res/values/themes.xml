@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.WearOS" parent="@android:style/Theme.DeviceDefault">
+        <!-- Add Wear OS specific theme attributes here -->
+    </style>
+</resources>
