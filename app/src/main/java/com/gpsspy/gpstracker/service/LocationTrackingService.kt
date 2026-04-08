@@ -48,6 +48,9 @@ class LocationTrackingService : Service() {
     @Inject
     lateinit var gnssStatusManager: GnssStatusManager
 
+    @Inject
+    lateinit var routineAnalysisManager: RoutineAnalysisManager
+
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var wakeLock: PowerManager.WakeLock
 
@@ -133,6 +136,7 @@ class LocationTrackingService : Service() {
 
         _isTracking.value = true
         gnssStatusManager.startListening()
+        routineAnalysisManager.startListening()
         serviceScope = CoroutineScope(Dispatchers.IO + Job())
 
         serviceScope.launch {
@@ -198,6 +202,7 @@ class LocationTrackingService : Service() {
 
         _isTracking.value = false
         gnssStatusManager.stopListening()
+        routineAnalysisManager.stopListening()
         serviceScope.cancel()
 
         stopForeground(STOP_FOREGROUND_REMOVE)

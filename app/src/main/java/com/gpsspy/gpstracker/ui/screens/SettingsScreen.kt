@@ -53,8 +53,10 @@ fun SettingsScreen(
                 )
 
                 if (homeLocation.first != null && homeLocation.second != null) {
+                    val lat = homeLocation.first!!
+                    val lng = homeLocation.second!!
                     Text(
-                        text = stringResource(id = R.string.settings_location_current, String.format("%.5f", homeLocation.first), String.format("%.5f", homeLocation.second)),
+                        text = stringResource(id = R.string.settings_location_current, String.format(java.util.Locale.getDefault(), "%.5f", lat), String.format(java.util.Locale.getDefault(), "%.5f", lng)),
                         style = MaterialTheme.typography.bodyMedium,
                         modifier = Modifier.padding(bottom = 8.dp)
                     )
@@ -88,7 +90,11 @@ fun SettingsScreen(
                                     Toast.makeText(context, toastHomeUpdated, Toast.LENGTH_SHORT).show()
                                     homeAddressText = ""
                                 } else {
-                                    val errStr = toastErrorMsg.replace(": ", ": $error") // Simple replacement since we can't fetch stringResource in callback directly easily
+                                    val errStr = if (error != null) {
+                                        context.getString(R.string.settings_toast_error, error)
+                                    } else {
+                                        context.getString(R.string.settings_toast_error, "Unknown")
+                                    }
                                     Toast.makeText(context, errStr, Toast.LENGTH_SHORT).show()
                                 }
                             }
@@ -116,8 +122,10 @@ fun SettingsScreen(
                 )
 
                 if (workLocation.first != null && workLocation.second != null) {
+                    val lat = workLocation.first!!
+                    val lng = workLocation.second!!
                     Text(
-                        text = stringResource(id = R.string.settings_location_current, String.format("%.5f", workLocation.first), String.format("%.5f", workLocation.second)),
+                        text = stringResource(id = R.string.settings_location_current, String.format(java.util.Locale.getDefault(), "%.5f", lat), String.format(java.util.Locale.getDefault(), "%.5f", lng)),
                         style = MaterialTheme.typography.bodyMedium,
                         modifier = Modifier.padding(bottom = 8.dp)
                     )
@@ -151,7 +159,11 @@ fun SettingsScreen(
                                     Toast.makeText(context, toastWorkUpdated, Toast.LENGTH_SHORT).show()
                                     workAddressText = ""
                                 } else {
-                                    val errStr = toastErrorMsg.replace(": ", ": $error")
+                                    val errStr = if (error != null) {
+                                        context.getString(R.string.settings_toast_error, error)
+                                    } else {
+                                        context.getString(R.string.settings_toast_error, "Unknown")
+                                    }
                                     Toast.makeText(context, errStr, Toast.LENGTH_SHORT).show()
                                 }
                             }

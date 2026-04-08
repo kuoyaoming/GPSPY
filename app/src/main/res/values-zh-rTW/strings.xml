@@ -9,6 +9,7 @@
     <string name="perm_understand_button">我明白了</string>
     <string name="tab_record">紀錄</string>
     <string name="tab_manager">管理</string>
+    <string name="tab_analysis">分析報表</string>
     <string name="gps_disabled_title">GPS 已停用</string>
     <string name="gps_disabled_message">您的 GPS 似乎已停用。請在系統設定中啟用以允許追蹤。</string>
     <string name="gps_disabled_enable">啟用 GPS</string>
@@ -37,4 +38,26 @@
     <string name="service_notif_title">GPS 追蹤中</string>
     <string name="service_notif_desc">背景軌跡紀錄中...</string>
     <string name="service_notif_stop">停止追蹤</string>
+    <string name="tab_settings">設定</string>
+    <string name="settings_title">日常行為分析設定</string>
+    <string name="settings_home_location">住家位置</string>
+    <string name="settings_work_location">公司位置</string>
+    <string name="settings_address_hint">輸入地址或地標尋找</string>
+    <string name="settings_search_save">搜尋並儲存</string>
+    <string name="settings_analysis_radius">分析判定半徑</string>
+    <string name="settings_location_current">目前的座標：%1$s, %2$s</string>
+    <string name="settings_location_not_set">尚未設定</string>
+    <string name="settings_toast_home_updated">住家位置已成功更新</string>
+    <string name="settings_toast_work_updated">公司位置已成功更新</string>
+    <string name="settings_toast_error">處理錯誤：%1$s</string>
+    <string name="settings_radius_meters">%1$d 公尺</string>
+    <string name="perm_loc_title">GPS 定位</string>
+    <string name="perm_loc_desc">需要此權限才能精準地在地圖上追蹤並描繪您的移動軌跡。</string>
+    <string name="perm_act_title">體能活動</string>
+    <string name="perm_act_desc">需要此權限來智慧判斷您是靜止還是移動，用以實作自動打卡報表。</string>
+    <string name="perm_notif_title">背景通知</string>
+    <string name="perm_notif_desc">需要此權限來確保在背景執行時，追蹤服務不會被 Android 系統無預警殺死。</string>
+    <string name="perm_open_settings">手動前往系統設定開啟</string>
+    <string name="setup_required_title">尚待完成先決設定</string>
+    <string name="setup_required_desc">為了讓系統能智慧幫您分析在家與工作的時間，請先前往「設定」頁面完成住家與公司的坐標設定。</string>
 </resources>

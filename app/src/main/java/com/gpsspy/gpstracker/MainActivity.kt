@@ -10,12 +10,16 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.LifecycleEventObserver
 import com.gpsspy.gpstracker.ui.screens.PermissionScreen
 import com.gpsspy.gpstracker.ui.screens.MainScreen
 import com.gpsspy.gpstracker.ui.theme.GpsTrackerTheme
@@ -35,6 +39,19 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     var permissionsGranted by remember { mutableStateOf(checkPermissions()) }
+
+                    val lifecycleOwner = LocalLifecycleOwner.current
+                    DisposableEffect(lifecycleOwner) {
+                        val observer = LifecycleEventObserver { _, event ->
+                            if (event == Lifecycle.Event.ON_RESUME) {
+                                permissionsGranted = checkPermissions()
+                            }
+                        }
+                        lifecycleOwner.lifecycle.addObserver(observer)
+                        onDispose {
+                            lifecycleOwner.lifecycle.removeObserver(observer)
+                        }
+                    }
 
                     if (permissionsGranted) {
                         MainScreen()
@@ -69,5 +86,3 @@ class MainActivity : ComponentActivity() {
         return fineLocation && coarseLocation && backgroundLocation && notifications
     }
 }
-
-

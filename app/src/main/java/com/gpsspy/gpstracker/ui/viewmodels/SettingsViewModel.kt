@@ -70,9 +70,9 @@ class SettingsViewModel @Inject constructor(
                         val addresses = geocoder.getFromLocationName(addressStr, 1)
                         handleGeocodeResult(addresses, isHome, onResult)
                     }
-                } catch (e: IOException) {
+                } catch (e: Exception) {
                     withContext(Dispatchers.Main) {
-                        onResult(false, e.message ?: "Network error during geocoding")
+                        onResult(false, e.localizedMessage ?: "Geocoding failed")
                     }
                 }
             }
@@ -83,15 +83,21 @@ class SettingsViewModel @Inject constructor(
         viewModelScope.launch {
             if (!addresses.isNullOrEmpty()) {
                 val location = addresses[0]
-                val lat = location.latitude
-                val lng = location.longitude
-                if (isHome) {
-                    settingsRepository.updateHomeLocation(lat, lng)
+                if (location.hasLatitude() && location.hasLongitude()) {
+                    val lat = location.latitude
+                    val lng = location.longitude
+                    if (isHome) {
+                        settingsRepository.updateHomeLocation(lat, lng)
+                    } else {
+                        settingsRepository.updateWorkLocation(lat, lng)
+                    }
+                    withContext(Dispatchers.Main) {
+                        onResult(true, null)
+                    }
                 } else {
-                    settingsRepository.updateWorkLocation(lat, lng)
-                }
-                withContext(Dispatchers.Main) {
-                    onResult(true, null)
+                    withContext(Dispatchers.Main) {
+                        onResult(false, "Address coordinates not found")
+                    }
                 }
             } else {
                  withContext(Dispatchers.Main) {

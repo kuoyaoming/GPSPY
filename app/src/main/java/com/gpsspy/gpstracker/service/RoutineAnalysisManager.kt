@@ -1,0 +1,175 @@
+package com.gpsspy.gpstracker.service
+
+import android.annotation.SuppressLint
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
+import android.os.Build
+import android.util.Log
+import com.google.android.gms.location.ActivityRecognition
+import com.google.android.gms.location.ActivityRecognitionClient
+import com.gpsspy.gpstracker.data.database.routine.RoutineAnalysis
+import com.gpsspy.gpstracker.data.database.routine.RoutineAnalysisDao
+import com.gpsspy.gpstracker.data.database.routine.RoutineState
+import com.gpsspy.gpstracker.data.preferences.SettingsRepository
+import dagger.hilt.android.qualifiers.ApplicationContext
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
+import javax.inject.Inject
+import javax.inject.Singleton
+
+@Singleton
+class RoutineAnalysisManager @Inject constructor(
+    @ApplicationContext private val context: Context,
+    private val routineAnalysisDao: RoutineAnalysisDao,
+    private val settingsRepository: SettingsRepository
+) {
+    private val activityRecognitionClient: ActivityRecognitionClient = ActivityRecognition.getClient(context)
+    
+    // We will update this from ActivityUpdateReceiver (-1 = unknown, otherwise DetectedActivity.* constants)
+    private val _currentPhysicalActivity = MutableStateFlow<Int>(-1)
+    val currentPhysicalActivity: StateFlow<Int> = _currentPhysicalActivity.asStateFlow()
+
+    private var stillStartTime: Long? = null
+    private var currentRoutineState: RoutineState? = null
+    private val managerScope = CoroutineScope(Dispatchers.IO + SupervisorJob())
+    
+    // Settings cache
+    private var homeLocation: Pair<Double?, Double?> = Pair(null, null)
+    private var workLocation: Pair<Double?, Double?> = Pair(null, null)
+    private var analysisRadius: Float = 100f
+
+    private val pendingIntent: PendingIntent by lazy {
+        val intent = Intent(context, ActivityUpdateReceiver::class.java)
+        val flags = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_MUTABLE
+        } else {
+            PendingIntent.FLAG_UPDATE_CURRENT
+        }
+        PendingIntent.getBroadcast(context, 0, intent, flags)
+    }
+
+    init {
+        managerScope.launch {
+            settingsRepository.homeLocationFlow.collect { homeLocation = it }
+        }
+        managerScope.launch {
+            settingsRepository.workLocationFlow.collect { workLocation = it }
+        }
+        managerScope.launch {
+            settingsRepository.analysisRadiusFlow.collect { analysisRadius = it }
+        }
+        
+        managerScope.launch {
+            // Restore current state from DB on boot/init
+            val lastState = routineAnalysisDao.getCurrentState()
+            if (lastState != null) {
+                currentRoutineState = lastState.state
+            }
+        }
+    }
+
+    @SuppressLint("MissingPermission") // Caller should check permissions
+    fun startListening() {
+        val detectionIntervalMillis = 10_000L // 10 seconds
+        val task = activityRecognitionClient.requestActivityUpdates(
+            detectionIntervalMillis,
+            pendingIntent
+        )
+
+        task.addOnSuccessListener {
+            Log.d("RoutineAnalysisManager", "Successfully requested activity updates")
+        }
+        task.addOnFailureListener { e ->
+            Log.e("RoutineAnalysisManager", "Failed to request activity updates", e)
+        }
+    }
+
+    fun stopListening() {
+        val task = activityRecognitionClient.removeActivityUpdates(pendingIntent)
+        task.addOnSuccessListener {
+            Log.d("RoutineAnalysisManager", "Successfully removed activity updates")
+        }
+        task.addOnFailureListener { e ->
+            Log.e("RoutineAnalysisManager", "Failed to remove activity updates", e)
+        }
+    }
+    
+    fun updateDetectedActivity(activityType: Int) {
+        _currentPhysicalActivity.value = activityType
+        Log.d("RoutineAnalysisManager", "Detected Activity updated to type: $activityType")
+
+        managerScope.launch {
+            val now = System.currentTimeMillis()
+            val isMoving = activityType == 0 || activityType == 1 || activityType == 7 || activityType == 8 // IN_VEHICLE, ON_BICYCLE, WALKING, RUNNING
+            
+            if (activityType == 3) { // STILL
+                if (stillStartTime == null) {
+                    stillStartTime = now
+                } else {
+                    val durationMs = now - stillStartTime!!
+                    if (durationMs >= 5 * 60 * 1000) { // 5 minutes
+                        val newState = determineStillLocationState()
+                        if (currentRoutineState != newState) {
+                            commitStateTransition(newState, stillStartTime!!)
+                        }
+                    }
+                }
+            } else if (isMoving) {
+                // Cancel debounce timer
+                stillStartTime = null
+                
+                if (currentRoutineState != RoutineState.MOVING) {
+                    // Transition immediately
+                    commitStateTransition(RoutineState.MOVING, now)
+                }
+            }
+        }
+    }
+
+    private suspend fun commitStateTransition(newState: RoutineState, startTime: Long) {
+        Log.d("RoutineAnalysisManager", "State transition: $currentRoutineState -> $newState at $startTime")
+        currentRoutineState = newState
+        
+        val latestRoutine = routineAnalysisDao.getCurrentState()
+        if (latestRoutine != null) {
+            val closedRoutine = latestRoutine.copy(endTime = startTime - 1)
+            routineAnalysisDao.update(closedRoutine)
+        }
+        
+        routineAnalysisDao.insert(
+            RoutineAnalysis(
+                startTime = startTime,
+                endTime = null,
+                state = newState
+            )
+        )
+    }
+
+    private fun determineStillLocationState(): RoutineState {
+        val currentLocation = LocationTrackingService.currentLocation.value ?: return RoutineState.OUTDOOR_STAY
+
+        val homeMatched = checkLocationMatch(currentLocation, homeLocation.first, homeLocation.second)
+        if (homeMatched) return RoutineState.HOME
+
+        val workMatched = checkLocationMatch(currentLocation, workLocation.first, workLocation.second)
+        if (workMatched) return RoutineState.WORK
+
+        return RoutineState.OUTDOOR_STAY
+    }
+
+    private fun checkLocationMatch(currentLoc: android.location.Location, targetLat: Double?, targetLng: Double?): Boolean {
+        if (targetLat == null || targetLng == null) return false
+        val target = android.location.Location("").apply {
+            latitude = targetLat
+            longitude = targetLng
+        }
+        val distance = currentLoc.distanceTo(target)
+        return distance <= analysisRadius
+    }
+}
