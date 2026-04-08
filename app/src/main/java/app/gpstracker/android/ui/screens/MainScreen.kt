@@ -9,6 +9,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.List
 import androidx.compose.material.icons.filled.LocationOn
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -22,8 +23,8 @@ import com.gpsspy.gpstracker.R
 fun MainScreen() {
     var selectedTab by remember { mutableStateOf(0) }
 
-    val tabs = listOf(stringResource(R.string.tab_record), stringResource(R.string.tab_manager))
-    val icons = listOf(Icons.Default.LocationOn, Icons.AutoMirrored.Filled.List)
+    val tabs = listOf(stringResource(R.string.tab_record), stringResource(R.string.tab_manager), stringResource(R.string.tab_settings))
+    val icons = listOf(Icons.Default.LocationOn, Icons.AutoMirrored.Filled.List, Icons.Default.Settings)
 
     Scaffold(
         bottomBar = {
@@ -40,10 +41,10 @@ fun MainScreen() {
         }
     ) { innerPadding ->
         Modifier.padding(innerPadding)
-        if (selectedTab == 0) {
-            TrackingScreen(modifier = Modifier.padding(innerPadding))
-        } else {
-            HistoryScreen(modifier = Modifier.padding(innerPadding))
+        when (selectedTab) {
+            0 -> TrackingScreen(modifier = Modifier.padding(innerPadding))
+            1 -> HistoryScreen(modifier = Modifier.padding(innerPadding))
+            2 -> SettingsScreen(modifier = Modifier.padding(innerPadding))
         }
     }
 }

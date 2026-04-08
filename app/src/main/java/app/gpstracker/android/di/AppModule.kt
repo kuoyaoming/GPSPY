@@ -29,6 +29,12 @@ object AppModule {
 
     @Provides
     @Singleton
+    fun provideRoutineAnalysisDao(database: AppDatabase): com.gpsspy.gpstracker.data.database.routine.RoutineAnalysisDao {
+        return database.routineAnalysisDao()
+    }
+
+    @Provides
+    @Singleton
     fun provideSettingsRepository(@ApplicationContext context: Context): SettingsRepository {
         return SettingsRepository(context)
     }

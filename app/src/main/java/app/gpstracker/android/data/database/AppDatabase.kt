@@ -5,9 +5,13 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 
-@Database(entities = [LocationPoint::class], version = 1, exportSchema = false)
+import com.gpsspy.gpstracker.data.database.routine.RoutineAnalysis
+import com.gpsspy.gpstracker.data.database.routine.RoutineAnalysisDao
+
+@Database(entities = [LocationPoint::class, RoutineAnalysis::class], version = 2, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun locationDao(): LocationDao
+    abstract fun routineAnalysisDao(): RoutineAnalysisDao
 
     companion object {
         @Volatile
