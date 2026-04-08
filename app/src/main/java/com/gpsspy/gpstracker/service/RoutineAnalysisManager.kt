@@ -106,7 +106,7 @@ class RoutineAnalysisManager @Inject constructor(
 
         managerScope.launch {
             val now = System.currentTimeMillis()
-            val isMoving = activityType == 0 || activityType == 1 || activityType == 7 || activityType == 8 // IN_VEHICLE, ON_BICYCLE, WALKING, RUNNING
+            val isMoving = activityType == DetectedActivity.IN_VEHICLE || activityType == DetectedActivity.ON_BICYCLE || activityType == DetectedActivity.WALKING || activityType == DetectedActivity.RUNNING
             
             if (activityType == 3) { // STILL
                 if (stillStartTime == null) {
